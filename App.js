@@ -3,10 +3,12 @@ import { StatusBar,Animated, StyleSheet, View, Image, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Test from './src/screens/Test.js'
+import Test from './src/screens/Test.js';
 
-import Login from './src/screens/Login'
-import Home from './src/screens/Home'
+import Login from './src/screens/Login';
+import Home from './src/screens/Home';
+import TransactionDetail from './src/screens/Transaction/Detail.js';
+import TransactionHistory from './src/screens/Transaction/History.js'
 
 function App () {
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -50,6 +52,8 @@ function App () {
                     <Screen name="navigation-testing" component={Test} />
                     {/* Home Screen */}
                     <Screen name="Home" component={Home} />
+                    <Screen name="TransactionDetail" component={TransactionDetail} />
+                    <Screen name="TransactionHistory" component={TransactionHistory} />
                     {/* Auth Screen */}
                     <Screen  name="Login" component={Login} />
                   </Navigator>
