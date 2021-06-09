@@ -1,8 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Animated, StyleSheet, View, Image, Text} from 'react-native';
+import { StatusBar,Animated, StyleSheet, View, Image, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import Test from './src/screens/Test.js'
+
 import Login from './src/screens/Login'
+import Home from './src/screens/Home'
+
 function App () {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const {Navigator, Screen} = createStackNavigator();
@@ -25,7 +30,10 @@ function App () {
               }, 5000); 
           });
     let splashScreen = (  
-        <View style={styles.splashScreenRootView}>  
+        <View style={styles.splashScreenRootView}>
+            <StatusBar
+            animated={true}
+            hidden={true} />  
             <View style={styles.splashScreenChildView}>
                 <Animated.View style={{
                     // Bind opacity to animated value
@@ -38,9 +46,12 @@ function App () {
     return (
         <NavigationContainer style={styles.navigationContainer}>
                   <Navigator headerMode={'none'}>
+                    {/* Testing Screen For Navigation Only */}
+                    <Screen name="navigation-testing" component={Test} />
+                    {/* Home Screen */}
+                    <Screen name="Home" component={Home} />
                     {/* Auth Screen */}
                     <Screen  name="Login" component={Login} />
-                    {/* Home Screen */}
                   </Navigator>
                   {(splashScreenVisible === true) ? splashScreen : null  }
         </NavigationContainer>  
