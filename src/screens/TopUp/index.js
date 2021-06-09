@@ -26,7 +26,7 @@ const TopUp = ({navigation}) => {
       <View style={styles.header}>
         <Image
           style={styles.backIcon}
-          source={require('../assets/img/arrow-left.png')}
+          source={require('../../assets/img/arrow-left.png')}
         />
         <Text style={styles.title}>Top Up</Text>
       </View>
@@ -36,7 +36,7 @@ const TopUp = ({navigation}) => {
             <View style={styles.plusIcon}>
               <Image
                 style={{width: 50, height: 50, alignSelf: 'center', margin: 10}}
-                source={require('../assets/img/plus.png')}
+                source={require('../../assets/img/plus.png')}
               />
             </View>
             <View style={{marginLeft: 20}}>
@@ -62,13 +62,16 @@ const TopUp = ({navigation}) => {
           </View>
         </View>
         <View>
-          <Text style={{
-            fontWeight: 'bold',
-            fontSize: 23,
-            color: '#514F5B',
-            marginLeft:20,
-            marginVertical: 30,}}>
-                 How To Top-Up</Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 23,
+              color: '#514F5B',
+              marginLeft: 20,
+              marginVertical: 30,
+            }}>
+            How To Top-Up
+          </Text>
           <Card style={styles.card}>
             <Text
               style={{

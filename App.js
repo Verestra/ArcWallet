@@ -8,6 +8,7 @@ import Test from './src/screens/Test.js';
 import Login from './src/screens/Login';
 import Home from './src/screens/Home';
 import TopUp from './src/screens/TopUp';
+import Profile from './src/screens/Profile';
 
 function App() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -56,6 +57,8 @@ function App() {
         <Screen name="Login" component={Login} />
         {/* Topup Screen */}
         <Screen name="TopUp" component={TopUp} />
+        {/* Profile Screen */}
+        <Screen name="Profile" component={Profile} />
       </Navigator>
       {splashScreenVisible === true ? splashScreen : null}
     </NavigationContainer>
