@@ -20,6 +20,18 @@ function Register(props) {
         <Text style={styles.textHeader}>Zwallet</Text>
       </View>
       <View style={styles.formContainer}>
+        {step === 3 ? (
+          <Icon
+            name="checkmark-circle"
+            style={{
+              fontSize: 100,
+              color: '#1EC15F',
+              marginTop: 40,
+              alignSelf: 'center',
+            }}
+          />
+        ) : null}
+
         <Text
           style={
             step === 1
@@ -34,6 +46,8 @@ function Register(props) {
             ? 'Please input your OTP'
             : step === 2
             ? 'Create Security PIN'
+            : step === 3
+            ? 'PIN Successfully Created'
             : 'Register'}
         </Text>
         <Text style={styles.subTextHeader}>
@@ -41,13 +55,15 @@ function Register(props) {
             ? 'We have sent your OTP (One Time Password) code via Email'
             : step === 2
             ? 'Create a PIN that’s contain 6 digits number for security purpose in Zwallet.'
+            : step === 3
+            ? 'Your PIN was successfully created and you can now access all the features in Zwallet. Login to your new account and start exploring!'
             : 'Create your account to access Zwallet.'}
         </Text>
         {step === 1 ? (
           <OtpInput changeHandler={text => setOTP(text)} />
         ) : step === 2 ? (
           <OtpInput changeHandler={text => setPin(text)} resetInp={true} />
-        ) : (
+        ) : step === 0 ? (
           <Form>
             <Item
               style={
@@ -135,7 +151,7 @@ function Register(props) {
               />
             </Item>
           </Form>
-        )}
+        ) : null}
         {step === 1 ? (
           <Content style={styles.boxButton}>
             <TouchableOpacity
@@ -171,7 +187,7 @@ function Register(props) {
                   ? styles.button2
                   : {...styles.button2, ...styles.button2Confirmed}
               }
-              onPress={() => navigation.navigate('Login')}>
+              onPress={() => setStep(3)}>
               <Text
                 style={
                   !pin
@@ -181,6 +197,16 @@ function Register(props) {
                     : {...styles.semiBold, ...styles.textWhite}
                 }>
                 Confirm
+              </Text>
+            </TouchableOpacity>
+          </Content>
+        ) : step === 3 ? (
+          <Content style={styles.boxButton}>
+            <TouchableOpacity
+              style={{...styles.button2, ...styles.button2Confirmed}}
+              onPress={() => navigation.navigate('Login')}>
+              <Text style={{...styles.semiBold, ...styles.textWhite}}>
+                Login Now
               </Text>
             </TouchableOpacity>
           </Content>
