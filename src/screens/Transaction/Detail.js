@@ -22,7 +22,7 @@ function TransactionDetail ({navigation}) {
         labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
         datasets: [
           {
-            data: [50000, 49000, 149000, 1150000]
+            data: [-50000, -49000, 149000, 1150000]
           }
         ]
       };

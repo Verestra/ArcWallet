@@ -72,7 +72,7 @@ function App () {
 
 const styles = StyleSheet.create({
   navigationContainer: {
-    backgroundColor: '#F9F9F9',
+    backgroundColor: '#E5E5E5',
   },
   splashScreenRootView: {
     justifyContent: 'center',
