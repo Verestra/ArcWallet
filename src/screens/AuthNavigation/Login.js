@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {Form, Item, Input, Icon, Footer, Content} from 'native-base';
 import styles from './style';
 function Login(props) {
-  const {navigation, setLoggedIn} = props;
+  const {navigation, setIsLoggedIn} = props;
   const [eyeVisible, setEyeVisible] = useState(false);
   return (
     <View style={styles.authContainer}>
@@ -45,7 +45,7 @@ function Login(props) {
         <Content style={styles.boxButton}>
           <TouchableOpacity
             style={styles.button2}
-            onPress={() => setLoggedIn(true)}>
+            onPress={() => setIsLoggedIn(true)}>
             <Text style={styles.semiBold}>Login</Text>
           </TouchableOpacity>
         </Content>
