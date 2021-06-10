@@ -7,7 +7,7 @@ import HomeNavigators from './src/navigators/HomeNavigators';
 
 function App() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const {Navigator, Screen} = createStackNavigator();
   const [splashScreenVisible, setSplashScreenVisible] = useState(true);
   hideSplashScreen = () => {
