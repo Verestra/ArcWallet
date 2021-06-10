@@ -1,8 +1,41 @@
 import React from 'react';
 import styles from './style'
 import{StatusBar} from 'react-native'
-import { List, ListItem, View, Container, Card, CardItem, Thumbnail, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
+import { List, ListItem, View, Container, CardItem, Thumbnail, Content, Left, Right, Body, Icon, Text } from 'native-base';
 function Home () {
+    const history = [
+    {
+        id: 1,
+        pict: require('../../assets/img/pic-samuel.png'),
+        name: 'Samuel Suhi',
+        type: 'Transfer',
+        transfer: 'in',
+        money: '50.000'
+    }, 
+    {
+        id: 2,
+        pict: require('../../assets/img/logo-spotify.png'),
+        name: 'Spotify',
+        type: 'Subscription',
+        transfer: 'out',
+        money: '49.000'
+    }, 
+    {
+        id: 3,
+        pict: require('../../assets/img/logo-netflix.png'),
+        name: 'Netflix',
+        type: 'Subscription',
+        transfer: 'out',
+        money: '149.000'
+    }, 
+    {
+        id: 2,
+        pict: require('../../assets/img/pic-bobi.png'),
+        name: 'Spotify',
+        type: 'Transfer',
+        transfer: 'in',
+        money: '1.150.000'
+    }]
     return (
         <Container>
             <StatusBar
@@ -40,34 +73,25 @@ function Home () {
                     <Text style={styles.text1}>Transaction History</Text>
                     <Text style={styles.blueText}>See all</Text>
                 </View>
-            <List style={{marginLeft: -15, marginBottom: 20}}>
+            {history.map((item, i)=> (
+            <List key={i} style={{marginLeft: -15, marginBottom: 20}}>
                 <ListItem elevation={3} style={{backgroundColor: '#FFFFFF', borderRadius: 10, padding: 10}} thumbnail>
                 <Left>
-                    <Thumbnail square source={require('../../assets/img/pic-samuel.png')} />
+                    <Thumbnail square source={item.pict} />
                 </Left>
                 <Body>
-                    <Text style={styles.text2}>Samuel Suhi</Text>
-                    <Text style={styles.text3}>Transfer</Text>
+                    <Text style={styles.text2}>{item.name}</Text>
+                    <Text style={styles.text3}>{item.type}</Text>
                 </Body>
                 <Right>
-                    <Text style={styles.plusText}>+Rp50.000</Text>
+                    {item.transfer === 'in' ? (
+                    <Text style={styles.plusText}>+Rp{item.money}</Text> ) : 
+                    <Text style={styles.minusText}>-Rp{item.money}</Text>
+                    }
                 </Right>
                 </ListItem>
             </List>
-            <List style={{marginLeft: -15, marginBottom: 20}}>
-                <ListItem elevation={3} style={{backgroundColor: '#FFFFFF',borderRadius: 10, padding: 10}} thumbnail>
-                <Left>
-                    <Thumbnail square source={require('../../assets/img/logo-spotify.png')} />
-                </Left>
-                <Body>
-                    <Text style={styles.text2}>Spotify</Text>
-                    <Text style={styles.text3}>Subscription</Text>
-                </Body>
-                <Right>
-                    <Text style={styles.minusText}>-Rp50.000</Text>
-                </Right>
-                </ListItem>
-            </List>
+            ))}
             </View>
         </Content>
       </Container>

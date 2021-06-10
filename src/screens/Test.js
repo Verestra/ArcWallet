@@ -16,6 +16,16 @@ function Test ({navigation}) {
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
           Go To Home
         </Text>
+        <Text 
+          onPress={() => navigation.navigate('TransactionDetail')}  
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Transaction Detail
+        </Text>
+         <Text 
+          onPress={() => navigation.navigate('TransactionHistory')}  
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Transaction History
+          </Text>
         <Text
           onPress={() => navigation.navigate('Login')}
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
