@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-function Test({navigation}) {
+function Test({navigation, setIsLoggedIn}) {
   return (
     <View
       style={{
@@ -35,6 +35,11 @@ function Test({navigation}) {
         onPress={() => navigation.navigate('Profile')}
         style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
         Go To Profile
+      </Text>
+      <Text
+        onPress={() => setIsLoggedIn(false)}
+        style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+        Logout
       </Text>
     </View>
   );

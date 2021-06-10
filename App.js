@@ -48,14 +48,23 @@ function App() {
         {/* Auth Screen */}
         {isLoggedIn ? (
           <>
-            <Screen name="Home" component={HomeNavigators} />
+            <Screen
+              name="Home"
+              children={() => (
+                <HomeNavigators
+                  setIsLoggedIn={choice => setIsLoggedIn(choice)}
+                />
+              )}
+            />
           </>
         ) : (
           <>
             <Screen
               name="Auth"
               children={() => (
-                <AuthNavigators setLoggedIn={choice => setIsLoggedIn(choice)} />
+                <AuthNavigators
+                  setIsLoggedIn={choice => setIsLoggedIn(choice)}
+                />
               )}
             />
           </>

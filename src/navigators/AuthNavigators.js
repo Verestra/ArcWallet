@@ -13,7 +13,9 @@ function AuthNavigators(props) {
     <Stack.Navigator headerMode="none">
       <Stack.Screen
         name="Login"
-        children={() => <Login setLoggedIn={choice => setIsLoggedIn(choice)} />}
+        children={() => (
+          <Login setIsLoggedIn={choice => setIsLoggedIn(choice)} />
+        )}
       />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
