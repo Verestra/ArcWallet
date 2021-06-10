@@ -55,7 +55,7 @@ function App() {
             <Screen
               name="Auth"
               children={() => (
-                <AuthNavigators setLoggedIn={choice => setLoggedIn(choice)} />
+                <AuthNavigators setLoggedIn={choice => setIsLoggedIn(choice)} />
               )}
             />
           </>
