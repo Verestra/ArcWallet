@@ -11,10 +11,10 @@ function TransactionDetail ({navigation}) {
         backgroundGradientFrom: "#F9F9F9",
         backgroundGradientFromOpacity: 0,
         backgroundGradientTo: "#F9F9F9",
-        color: (opacity = 1) => `#F9f9f9`,
+        color: (opacity = 1) => `#F9F9F9`,
         labelColor: (opacity = 1) => `rgba(143, 143, 143, ${opacity})`,
-        strokeWidth: 2, // optional, default 3
-        barPercentage: 1,
+        barPercentage: 0.5,
+        barRadius: 10,
         decimalPlaces: 0,
         useShadowColorFromDataset: false // optional,
       };
@@ -22,18 +22,9 @@ function TransactionDetail ({navigation}) {
     const data = {
         labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
         datasets: [
-          {
-            data: [50000, 49000, 149000, 49000, 250000, 150000, 50000],
-            colors: [
-                (opacity = 1) => `#6379F4`,
-                (opacity = 1) => `#6379F4`,
-                (opacity = 1) => `#9DA6B5`,
-                (opacity = 1) => `#9DA6B5`,
-                (opacity = 1) => `#9DA6B5`,
-                (opacity = 1) => `#6379F4`,
-                (opacity = 1) => `#9DA6B5`,]
-          }
-        ]
+            { data: [-3000, 5000, 6000,7000,9000,10000,11000], color: () => '#6379F4'},
+            { data: [7000, 8000, 9000,10000,11000,12000,13000], color: () => '#9DA6B5' }
+            ],
       };
     const history = [
         {
@@ -110,9 +101,9 @@ function TransactionDetail ({navigation}) {
                     fromZero={true}
                     />
             <View style={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
-                <Badge style={{ backgroundColor: '#6379F4' ,borderRadius: 20}} />
+                <Badge style={{ backgroundColor: '#6379F4' ,borderRadius: 20, marginRight: 5}} />
                 <Text style={{...styles.text1, marginRight:30}}>Income</Text>
-                <Badge style={{ backgroundColor: '#9DA6B5' ,borderRadius: 20}}/>
+                <Badge style={{ backgroundColor: '#9DA6B5' ,borderRadius: 20, marginRight: 5}}/>
                 <Text style={styles.text1}>Outcome</Text>
             </View>
             </View>
