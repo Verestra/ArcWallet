@@ -5,9 +5,8 @@ import Login from '../screens/AuthNavigation/Login';
 import Register from '../screens/AuthNavigation/Register';
 import ResetPassword from '../screens/AuthNavigation/ResetPassword';
 
-const Stack = createStackNavigator();
-
 function AuthNavigators(props) {
+  const Stack = createStackNavigator();
   const {setIsLoggedIn} = props;
   return (
     <Stack.Navigator headerMode="none">

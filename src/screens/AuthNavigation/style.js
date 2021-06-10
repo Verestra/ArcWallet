@@ -85,6 +85,10 @@ const styles = StyleSheet.create({
   },
   semiBold: {
     fontFamily: 'Kanit-SemiBold',
+    color: '#000',
+  },
+  fontHeaderSmall: {
+    fontSize: 26,
   },
 });
 
