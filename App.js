@@ -1,14 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StatusBar,Animated, StyleSheet, View, Image, Text} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, {useEffect, useState, useRef} from 'react';
+import {StatusBar, Animated, StyleSheet, View, Image, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import Test from './src/screens/Test.js';
 
 import Login from './src/screens/Login';
+
 import Home from './src/screens/Home';
 import TransactionDetail from './src/screens/Transaction/Detail.js';
 import TransactionHistory from './src/screens/Transaction/History.js'
+
+import TopUp from './src/screens/TopUp';
+import Profile from './src/screens/Profile';
 
 function App () {
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -54,6 +58,10 @@ function App () {
                     <Screen name="Home" component={Home} />
                     <Screen name="TransactionDetail" component={TransactionDetail} />
                     <Screen name="TransactionHistory" component={TransactionHistory} />
+                    {/* Topup Screen */}
+                    <Screen name="TopUp" component={TopUp} />
+                    {/* Profile Screen */}
+                    <Screen name="Profile" component={Profile} />
                     {/* Auth Screen */}
                     <Screen  name="Login" component={Login} />
                   </Navigator>
@@ -62,30 +70,30 @@ function App () {
     )
 }
 
-const styles = StyleSheet.create( {   
-        navigationContainer: {
-          backgroundColor: '#F9F9F9',
-        },
-        splashScreenRootView: {  
-            justifyContent: 'center',  
-            flex:1,   
-            position: 'absolute',  
-            width: '100%',  
-            height: '100%',
-          },  
-       
-        splashScreenChildView: {  
-            justifyContent: 'center',  
-            alignItems: 'center',  
-            backgroundColor: '#FFFFFF',  
-            flex:1,  
-        },
-        textSplash : {
-            fontFamily: 'NunitoSans-ExtraLightItalic',
-            textAlign: 'center',
-            fontSize: 20,
-            color: "#6379F4"
-        }
-    });
+const styles = StyleSheet.create({
+  navigationContainer: {
+    backgroundColor: '#F9F9F9',
+  },
+  splashScreenRootView: {
+    justifyContent: 'center',
+    flex: 1,
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
 
-export default App
+  splashScreenChildView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    flex: 1,
+  },
+  textSplash: {
+    fontFamily: 'NunitoSans-ExtraLightItalic',
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#6379F4',
+  },
+});
+
+export default App;
