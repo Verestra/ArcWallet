@@ -16,16 +16,16 @@ function Test ({navigation}) {
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
           Go To Home
         </Text>
-        <Text 
-          onPress={() => navigation.navigate('TransactionDetail')}  
+        <Text
+          onPress={() => navigation.navigate('TransactionDetail')}
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
           Go To Transaction Detail
         </Text>
-         <Text 
-          onPress={() => navigation.navigate('TransactionHistory')}  
+        <Text
+          onPress={() => navigation.navigate('TransactionHistory')}
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
           Go To Transaction History
-          </Text>
+        </Text>
         <Text
           onPress={() => navigation.navigate('Login')}
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
@@ -40,6 +40,11 @@ function Test ({navigation}) {
           onPress={() => navigation.navigate('Profile')}
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
           Go To Profile
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('Notification')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Notification
         </Text>
       </View>
     );

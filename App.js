@@ -13,6 +13,7 @@ import TransactionHistory from './src/screens/Transaction/History.js';
 
 import TopUp from './src/screens/TopUp';
 import Profile from './src/screens/Profile';
+import Notification from './src/screens/Notification';
 import PersonalInformation from './src/screens/Profile/PersonalInformation';
 
 function App() {
@@ -64,9 +65,11 @@ function App() {
         <Screen name="TopUp" component={TopUp} />
         {/* Profile Screen */}
         <Screen name="Profile" component={Profile} />
-        <Screen name="PersonalInformation" component ={PersonalInformation}/>
+        <Screen name="PersonalInformation" component={PersonalInformation} />
         {/* Auth Screen */}
         <Screen name="Login" component={Login} />
+        {/* Notification screen */}
+        <Screen name="Notification" component={Notification} />
       </Navigator>
       {splashScreenVisible === true ? splashScreen : null}
     </NavigationContainer>
