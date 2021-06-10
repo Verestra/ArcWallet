@@ -11,11 +11,14 @@ import TopUp from '../screens/TopUp';
 import Profile from '../screens/Profile';
 const Stack = createStackNavigator();
 
-function HomeNavigators() {
+function HomeNavigators(props) {
+  const {setIsLoggedIn} = props;
   return (
     <Stack.Navigator headerMode="none">
       {/* Testing Screen For Navigation Only */}
-      <Stack.Screen name="navigation-testing" component={Test} />
+      <Stack.Screen name="navigation-testing" children={() => (
+          <Test setIsLoggedIn={choice => setIsLoggedIn(choice)} />
+        )} />
       {/* Home Screen */}
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="TransactionDetail" component={TransactionDetail} />

@@ -8,12 +8,14 @@ import ResetPassword from '../screens/AuthNavigation/ResetPassword';
 const Stack = createStackNavigator();
 
 function AuthNavigators(props) {
-  const {setLoggedIn} = props;
+  const {setIsLoggedIn} = props;
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen
         name="Login"
-        children={() => <Login setLoggedIn={choice => setLoggedIn(choice)} />}
+        children={() => (
+          <Login setIsLoggedIn={choice => setIsLoggedIn(choice)} />
+        )}
       />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
