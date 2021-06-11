@@ -56,7 +56,7 @@ function Test({setIsLoggedIn}) {
             Go To Profile
           </Text>
           <Text
-            onPress={() => setIsLoggedIn(alse)}
+            onPress={() => setIsLoggedIn(false)}
             style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
             Logout
           </Text>
