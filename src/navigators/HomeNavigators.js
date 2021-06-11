@@ -19,6 +19,8 @@ import Failed from '../screens/Failed'
 import Notification from '../screens/Notification'
 import PersonalInformation from '../screens/Profile/PersonalInformation.js'
 
+import AddPhoneNumber from '../screens/AddPhoneNumber';
+
 const Stack = createStackNavigator();
 
 function HomeNavigators(props) {
@@ -45,6 +47,8 @@ function HomeNavigators(props) {
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="PersonalInformation" component={PersonalInformation} />
+      {/* Phone Number Screen */}
+      <Stack.Screen name= "AddPhoneNumber" component={AddPhoneNumber}/>
     </Stack.Navigator>
   );
 }

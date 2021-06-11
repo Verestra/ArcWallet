@@ -19,68 +19,73 @@ function Test({setIsLoggedIn}) {
           onPress={() => navigation.navigate('Home')}
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
           Go To Home
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('TransactionDetail')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Transaction Detail
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('TransactionHistory')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Transaction History
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('SearchReceiver')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Search Receiver
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('AmountInput')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Amount Input
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('Confirmation')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Confirmation
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('TopUp')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To TopUp
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('Profile')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Profile
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('Success')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Success
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('Failed')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Failed
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('Notification')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Notification
-          </Text>
-          <Text
-            onPress={() => navigation.navigate('PersonalInformation')}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Go To Personal Information
-          </Text>
-          <Text
-            onPress={() => setIsLoggedIn(false)}
-            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
-            Logout
-          </Text>
-        </Content>
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('TransactionDetail')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Transaction Detail
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('TransactionHistory')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Transaction History
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('SearchReceiver')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Search Receiver
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('AmountInput')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Amount Input
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('Confirmation')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Confirmation
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('TopUp')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To TopUp
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('Profile')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Profile
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('Success')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Success
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('Failed')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Failed
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('Notification')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Notification
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('PersonalInformation')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Personal Information
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('AddPhoneNumber')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Add Phone Number
+        </Text>
+        <Text
+          onPress={() => setIsLoggedIn(false)}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Logout
+        </Text>
+      </Content>
     </View>
   );
 }
