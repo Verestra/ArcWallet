@@ -13,6 +13,8 @@ import Confirmation from '../screens/Transfer/Confirmation.js';
 
 import TopUp from '../screens/TopUp';
 import Profile from '../screens/Profile';
+import Success from '../screens/Success';
+import Failed from '../screens/Failed'
 
 import Notification from '../screens/Notification'
 import PersonalInformation from '../screens/Profile/PersonalInformation.js'
@@ -35,6 +37,8 @@ function HomeNavigators(props) {
       <Stack.Screen name="SearchReceiver" component={SearchReceiver} />
       <Stack.Screen name="AmountInput" component={AmountInput} />
       <Stack.Screen name="Confirmation" component={Confirmation} />
+      <Stack.Screen name="Success" component={Success} />
+      <Stack.Screen name="Failed" component={Failed} />
       {/* Topup Screen */}
       <Stack.Screen name="TopUp" component={TopUp} />
       {/* Profile Screen */}
