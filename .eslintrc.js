@@ -3,7 +3,7 @@ module.exports = {
   extends: '@react-native-community',
   //uncomment / comment for windows user
   'prettier/prettier': [
-    'error',
+    // 'error',
     {
       endOfLine: 'auto',
     },

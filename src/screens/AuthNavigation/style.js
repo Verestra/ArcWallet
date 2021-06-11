@@ -46,13 +46,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     backgroundColor: '#fff',
+    paddingRight: 15,
     flex: 1,
   },
   authContainer: {
     height: '100%',
     backgroundColor: '#e5e5e5',
-    borderColor: '#000',
-    borderWidth: 2,
   },
   textBlack: {
     color: '#000',
@@ -85,6 +84,10 @@ const styles = StyleSheet.create({
   },
   semiBold: {
     fontFamily: 'Kanit-SemiBold',
+    color: '#000',
+  },
+  fontHeaderSmall: {
+    fontSize: 26,
   },
 });
 
