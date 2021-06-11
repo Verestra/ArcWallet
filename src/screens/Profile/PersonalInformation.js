@@ -14,7 +14,7 @@ function PersonalInformation({...props}) {
     firstName: 'Robert',
     lastName: 'Chandler',
     email: 'pewdiepie@gmail.com',
-    phoneNumber: '0918283747',
+    phoneNumber: '+62 813-9387-7946',
   };
   return (
     <View style={{backgroundColor: 'white', width: '100%', height: '100%'}}>

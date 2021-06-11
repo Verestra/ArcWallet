@@ -23,9 +23,18 @@ function TransactionDetail ({navigation}) {
     const data = {
         labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
         datasets: [
-            { data: [-3000, 5000, 6000,7000,9000,10000,11000], color: () => '#6379F4'},
-            { data: [7000, 8000, 9000,10000,11000,12000,13000], color: () => '#9DA6B5' }
-            ],
+          {
+            data: [50000, 49000, 149000, 49000, 250000, 150000, 50000],
+            colors: [
+                (opacity = 1) => `#6379F4`,
+                (opacity = 1) => `#6379F4`,
+                (opacity = 1) => `#9DA6B5`,
+                (opacity = 1) => `#9DA6B5`,
+                (opacity = 1) => `#9DA6B5`,
+                (opacity = 1) => `#6379F4`,
+                (opacity = 1) => `#9DA6B5`,]
+          }
+        ]
       };
     const history = [
         {
@@ -109,22 +118,6 @@ function TransactionDetail ({navigation}) {
             </View>
             </View>
             </View>
-          </Body>
-        </CardItem>
-        <View style={styles.containerTransaction}>
-          <View style={{marginTop: 45, marginBottom: 25}}>
-            <Text style={{...styles.text1, marginBottom: 30}}>
-              In This Week
-            </Text>
-            <BarChart
-              data={data}
-              width={325}
-              height={220}
-              chartConfig={chartConfig}
-              withInnerLines={false}
-            />
-          </View>
-        </View>
         <View style={styles.containerHistory}>
           <View style={styles.cardHistory}>
             <Text style={styles.text1}>Transaction History</Text>

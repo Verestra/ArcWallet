@@ -56,7 +56,7 @@ function Notification() {
           <Image source={require('../../assets/img/arrow-green-down.png')} />
         </View>
         <View style={{marginLeft: 20}}>
-          <Text style={styles.info}>Trasnfer to Jessica</Text>
+          <Text style={styles.info}>Transfer to Jessica</Text>
           <Text style={styles.nominal}>Rp. 100.000</Text>
         </View>
       </Card>

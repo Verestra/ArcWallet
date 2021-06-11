@@ -13,6 +13,10 @@ import Confirmation from '../screens/Transfer/Confirmation.js';
 
 import TopUp from '../screens/TopUp';
 import Profile from '../screens/Profile';
+
+import Notification from '../screens/Notification'
+import PersonalInformation from '../screens/Profile/PersonalInformation.js'
+
 const Stack = createStackNavigator();
 
 function HomeNavigators(props) {
@@ -35,6 +39,8 @@ function HomeNavigators(props) {
       <Stack.Screen name="TopUp" component={TopUp} />
       {/* Profile Screen */}
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Notification" component={Notification} />
+      <Stack.Screen name="PersonalInformation" component={PersonalInformation} />
     </Stack.Navigator>
   );
 }
