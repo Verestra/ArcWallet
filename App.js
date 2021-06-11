@@ -2,22 +2,13 @@ import React, {useEffect, useState, useRef} from 'react';
 import {StatusBar, Animated, StyleSheet, View, Image, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import AuthNavigators from './src/navigators/AuthNavigators';
+import HomeNavigators from './src/navigators/HomeNavigators';
 
-import Test from './src/screens/Test.js';
-
-import Login from './src/screens/Login';
-
-import Home from './src/screens/Home';
-import TransactionDetail from './src/screens/Transaction/Detail.js';
-import TransactionHistory from './src/screens/Transaction/History.js';
-
-import TopUp from './src/screens/TopUp';
-import Profile from './src/screens/Profile';
-import Notification from './src/screens/Notification';
-import PersonalInformation from './src/screens/Profile/PersonalInformation';
 
 function App() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const {Navigator, Screen} = createStackNavigator();
   const [splashScreenVisible, setSplashScreenVisible] = useState(true);
   hideSplashScreen = () => {
@@ -55,21 +46,31 @@ function App() {
   return (
     <NavigationContainer style={styles.navigationContainer}>
       <Navigator headerMode={'none'}>
-        {/* Testing Screen For Navigation Only */}
-        <Screen name="navigation-testing" component={Test} />
-        {/* Home Screen */}
-        <Screen name="Home" component={Home} />
-        <Screen name="TransactionDetail" component={TransactionDetail} />
-        <Screen name="TransactionHistory" component={TransactionHistory} />
-        {/* Topup Screen */}
-        <Screen name="TopUp" component={TopUp} />
-        {/* Profile Screen */}
-        <Screen name="Profile" component={Profile} />
-        <Screen name="PersonalInformation" component={PersonalInformation} />
+
         {/* Auth Screen */}
-        <Screen name="Login" component={Login} />
-        {/* Notification screen */}
-        <Screen name="Notification" component={Notification} />
+        {isLoggedIn ? (
+          <>
+            <Screen
+              name="Home"
+              children={() => (
+                <HomeNavigators
+                  setIsLoggedIn={choice => setIsLoggedIn(choice)}
+                />
+              )}
+            />
+          </>
+        ) : (
+          <>
+            <Screen
+              name="Auth"
+              children={() => (
+                <AuthNavigators
+                  setIsLoggedIn={choice => setIsLoggedIn(choice)}
+                />
+              )}
+            />
+          </>
+        )}
       </Navigator>
       {splashScreenVisible === true ? splashScreen : null}
     </NavigationContainer>
@@ -78,7 +79,7 @@ function App() {
 
 const styles = StyleSheet.create({
   navigationContainer: {
-    backgroundColor: '#F9F9F9',
+    backgroundColor: '#E5E5E5',
   },
   splashScreenRootView: {
     justifyContent: 'center',
