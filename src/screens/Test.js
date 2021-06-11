@@ -56,6 +56,16 @@ function Test({setIsLoggedIn}) {
             Go To Profile
           </Text>
           <Text
+            onPress={() => navigation.navigate('Notification')}
+            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+            Go To Notification
+          </Text>
+          <Text
+            onPress={() => navigation.navigate('PersonalInformation')}
+            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+            Go To Personal Information
+          </Text>
+          <Text
             onPress={() => setIsLoggedIn(false)}
             style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
             Logout

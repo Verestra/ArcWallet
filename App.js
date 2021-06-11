@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import AuthNavigators from './src/navigators/AuthNavigators';
 import HomeNavigators from './src/navigators/HomeNavigators';
 
+
 function App() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -45,6 +46,7 @@ function App() {
   return (
     <NavigationContainer style={styles.navigationContainer}>
       <Navigator headerMode={'none'}>
+
         {/* Auth Screen */}
         {isLoggedIn ? (
           <>
