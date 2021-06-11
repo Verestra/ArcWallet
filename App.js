@@ -16,6 +16,9 @@ import Profile from './src/screens/Profile';
 import Notification from './src/screens/Notification';
 import PersonalInformation from './src/screens/Profile/PersonalInformation';
 
+import Success from './src/screens/Success';
+import Failed from './src/screens/Failed';
+
 function App() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const {Navigator, Screen} = createStackNavigator();
@@ -70,6 +73,9 @@ function App() {
         <Screen name="Login" component={Login} />
         {/* Notification screen */}
         <Screen name="Notification" component={Notification} />
+        {/* Success and failed screen */}
+        <Screen name="Success" component={Success} />
+        <Screen name="Failed" component={Failed} />
       </Navigator>
       {splashScreenVisible === true ? splashScreen : null}
     </NavigationContainer>
