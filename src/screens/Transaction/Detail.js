@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './style';
+
 import{ StatusBar } from 'react-native';
 import { Dimensions } from "react-native";
 import { BarChart } from "react-native-chart-kit";
@@ -108,33 +109,57 @@ function TransactionDetail ({navigation}) {
             </View>
             </View>
             </View>
-            <View style={styles.containerHistory}>
-                <View style={styles.cardHistory}>
-                    <Text style={styles.text1}>Transaction History</Text>
-                    <Text style={styles.blueText}>See all</Text>
-                </View>
-            {history.map((item, i)=> (
+          </Body>
+        </CardItem>
+        <View style={styles.containerTransaction}>
+          <View style={{marginTop: 45, marginBottom: 25}}>
+            <Text style={{...styles.text1, marginBottom: 30}}>
+              In This Week
+            </Text>
+            <BarChart
+              data={data}
+              width={325}
+              height={220}
+              chartConfig={chartConfig}
+              withInnerLines={false}
+            />
+          </View>
+        </View>
+        <View style={styles.containerHistory}>
+          <View style={styles.cardHistory}>
+            <Text style={styles.text1}>Transaction History</Text>
+            <Text style={styles.blueText}>See all</Text>
+          </View>
+          {history.map((item, i) => (
             <List key={i} style={{marginLeft: -15, marginBottom: 20}}>
-                <ListItem elevation={3} style={{backgroundColor: '#FFFFFF', borderRadius: 10, padding: 10}} thumbnail>
+              <ListItem
+                elevation={3}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 10,
+                  padding: 10,
+                }}
+                thumbnail>
                 <Left>
-                    <Thumbnail square source={item.pict} />
+                  <Thumbnail square source={item.pict} />
                 </Left>
                 <Body>
-                    <Text style={styles.text2}>{item.name}</Text>
-                    <Text style={styles.text3}>{item.type}</Text>
+                  <Text style={styles.text2}>{item.name}</Text>
+                  <Text style={styles.text3}>{item.type}</Text>
                 </Body>
                 <Right>
-                    {item.transfer === 'in' ? (
-                    <Text style={styles.plusText}>+Rp{item.money}</Text> ) : 
+                  {item.transfer === 'in' ? (
+                    <Text style={styles.plusText}>+Rp{item.money}</Text>
+                  ) : (
                     <Text style={styles.minusText}>-Rp{item.money}</Text>
-                    }
+                  )}
                 </Right>
-                </ListItem>
+              </ListItem>
             </List>
-            ))}
-            </View>
-        </Content>
-      </Container>
-    )
+          ))}
+        </View>
+      </Content>
+    </Container>
+  );
 }
-export default TransactionDetail
+export default TransactionDetail;
