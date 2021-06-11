@@ -20,7 +20,7 @@ import Notification from '../screens/Notification'
 import PersonalInformation from '../screens/Profile/PersonalInformation.js'
 
 import AddPhoneNumber from '../screens/AddPhoneNumber';
-
+import ManagePhoneNumber from '../screens/ManagePhoneNumber';
 const Stack = createStackNavigator();
 
 function HomeNavigators(props) {
@@ -28,9 +28,12 @@ function HomeNavigators(props) {
   return (
     <Stack.Navigator headerMode="none">
       {/* Testing Screen For Navigation Only */}
-      <Stack.Screen name="navigation-testing" children={() => (
+      <Stack.Screen
+        name="navigation-testing"
+        children={() => (
           <Test setIsLoggedIn={choice => setIsLoggedIn(choice)} />
-        )} />
+        )}
+      />
       {/* Home Screen */}
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="TransactionDetail" component={TransactionDetail} />
@@ -46,9 +49,13 @@ function HomeNavigators(props) {
       {/* Profile Screen */}
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Notification" component={Notification} />
-      <Stack.Screen name="PersonalInformation" component={PersonalInformation} />
+      <Stack.Screen
+        name="PersonalInformation"
+        component={PersonalInformation}
+      />
       {/* Phone Number Screen */}
-      <Stack.Screen name= "AddPhoneNumber" component={AddPhoneNumber}/>
+      <Stack.Screen name="AddPhoneNumber" component={AddPhoneNumber} />
+      <Stack.Screen name="ManagePhoneNumber" component={ManagePhoneNumber} />
     </Stack.Navigator>
   );
 }

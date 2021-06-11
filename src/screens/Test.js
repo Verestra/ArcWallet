@@ -81,6 +81,11 @@ function Test({setIsLoggedIn}) {
           Go To Add Phone Number
         </Text>
         <Text
+          onPress={() => navigation.navigate('ManagePhoneNumber')}
+          style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+          Go To Add Manage Number
+        </Text>
+        <Text
           onPress={() => setIsLoggedIn(false)}
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
           Logout

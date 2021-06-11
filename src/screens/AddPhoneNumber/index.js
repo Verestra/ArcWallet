@@ -29,18 +29,19 @@ function AddPhoneNumber() {
             Add at least one phone number for the transfer ID so you can start
             transfering your money to another user.
           </Text>
-          <View style={{flexDirection:'row', marginTop:50,}}>
+          <View style={{flexDirection: 'row', marginTop: 50}}>
             <Image
               style={Styles.phoneIcon}
               source={require('../../assets/img/VectorPhone.png')}
             />
             <TextInput
-            keyboardType="numeric"
-            placeholder="Enter your phone number" />
+              keyboardType="numeric"
+              placeholder="Enter your phone number"
+            />
           </View>
 
-          <Button style={Styles.button}>
-            <Label style={Styles.btnLabel}>Submit</Label>
+          <Button block style={Styles.button}>
+            <Text style={Styles.btnLabel}>Submit</Text>
           </Button>
         </View>
       </KeyboardAvoidingView>
@@ -81,6 +82,7 @@ alignSelf:'center',
     marginVertical: 30,
     position: 'absolute',
     top: '80%',
+    alignItems:'center',
   },
   btnLabel: {
     fontFamily: 'NunitoSans',
@@ -88,7 +90,6 @@ alignSelf:'center',
     fontWeight: 'bold',
     fontSize: 18,
     color: '#FFFFFF',
-    marginLeft: 150,
   },
   input: {
     backgroundColor: 'blue',

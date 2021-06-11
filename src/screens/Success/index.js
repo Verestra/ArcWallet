@@ -31,8 +31,8 @@ function Success() {
         <View style={styles.header}>
           <Text style={styles.pageName}> Transfer Details</Text>
         </View>
-        <View style={{paddingLeft: 20}}>
-          <View style={{alignItems: 'center', padding: 20}}>
+        <View style={{padding:10,}}>
+          <View style={{alignItems: 'center', marginVertical: 30,}}>
             <Image source={require('../../assets/img/success.png')} />
             <Text style={styles.status}>Transfer Success</Text>
           </View>
@@ -109,36 +109,27 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   detailTransfer: {
-    marginLeft: 20,
     marginBottom: 20,
     backgroundColor: 'white',
     borderRadius: 10,
-    width: '40%',
+    width: '49%',
     padding: 10,
+    marginRight: 10,
   },
   detailTransfer2: {
-    marginLeft: 20,
     marginBottom: 20,
     backgroundColor: 'white',
     borderRadius: 10,
-    width: '85%',
+    width: '100%',
     padding: 20,
   },
   detailuserTransfer: {
-    marginLeft: 20,
     marginBottom: 20,
     backgroundColor: 'white',
     borderRadius: 10,
-    width: '85%',
+    width: '100%',
     padding: 20,
     flexDirection: 'row',
-  },
-  btnHome: {
-    backgroundColor: '#6379F4',
-    width: '85%',
-    borderRadius: 10,
-    marginLeft: 20,
-    marginBottom: 30,
   },
   detailMenu: {
     fontFamily: 'NunitoSans',
@@ -173,12 +164,20 @@ const styles = StyleSheet.create({
     color: '#7A7886',
     marginLeft: 10,
   },
+  btnHome: {
+    backgroundColor: '#6379F4',
+    width: '100%',
+    borderRadius: 10,
+    padding:10,
+    marginBottom: 30,
+    alignItems:'center',
+  },
   btnText: {
     fontFamily: 'NunitoSans',
     fontStyle: 'normal',
     fontSize: 18,
     color: 'white',
-    marginLeft:110,
+    marginLeft:140,
   },
 });
 export default Success;

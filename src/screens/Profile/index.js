@@ -36,12 +36,15 @@ function Profile({...props}) {
             style={styles.card}
             onPress={() => props.navigation.navigate('PersonalInformation')}>
             <Text style={styles.textInCard}>Personal Information</Text>
+            <Image style={styles.arrow } source={require('../../assets/img/arrow-right.png')} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.card}>
             <Text style={styles.textInCard}>Change Password</Text>
+            <Image source={require('../../assets/img/arrow-right.png')} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.card}>
             <Text style={styles.textInCard}>Change PIN</Text>
+            <Image source={require('../../assets/img/arrow-right.png')} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.card}>
             <Text style={styles.textInCard}>Notification</Text>
@@ -91,6 +94,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     paddingLeft: 20,
+    flexDirection:'row',
   },
   textInCard: {
     fontFamily: 'NunitoSans',
@@ -99,6 +103,7 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     color: '#4D4B57',
     textAlignVertical: 'center',
+    width:'90%',
   },
 });
 export default Profile;
