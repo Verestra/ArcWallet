@@ -14,8 +14,8 @@ function Test({setIsLoggedIn}) {
         width: '100%',
         height: '100%',
       }}>
-        <Content>
-          <Text
+      <Content>
+        <Text
           onPress={() => navigation.navigate('Home')}
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
           Go To Home
@@ -54,6 +54,16 @@ function Test({setIsLoggedIn}) {
             onPress={() => navigation.navigate('Profile')}
             style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
             Go To Profile
+          </Text>
+          <Text
+            onPress={() => navigation.navigate('Success')}
+            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+            Go To Success
+          </Text>
+          <Text
+            onPress={() => navigation.navigate('Failed')}
+            style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
+            Go To Failed
           </Text>
           <Text
             onPress={() => navigation.navigate('Notification')}
