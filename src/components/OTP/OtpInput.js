@@ -53,7 +53,7 @@ function OtpInput(props) {
         value={input1}
         returnKeyType="next"
         clearTextOnFocus={true}
-        keyboardType="phone-pad"
+        // keyboardType="phone-pad"
         ref={inputRef1}
         style={
           input1.length > 0
@@ -72,7 +72,7 @@ function OtpInput(props) {
         value={input2}
         returnKeyType="next"
         clearTextOnFocus={true}
-        keyboardType="phone-pad"
+        // keyboardType="phone-pad"
         ref={inputRef2}
         style={
           input2.length > 0
@@ -91,7 +91,7 @@ function OtpInput(props) {
         value={input3}
         returnKeyType="next"
         clearTextOnFocus={true}
-        keyboardType="phone-pad"
+        // keyboardType="phone-pad"
         ref={inputRef3}
         style={
           input3.length > 0
@@ -110,7 +110,7 @@ function OtpInput(props) {
         value={input4}
         returnKeyType="next"
         clearTextOnFocus={true}
-        keyboardType="phone-pad"
+        // keyboardType="phone-pad"
         ref={inputRef4}
         style={
           input4.length > 0
@@ -129,7 +129,7 @@ function OtpInput(props) {
         value={input5}
         returnKeyType="next"
         clearTextOnFocus={true}
-        keyboardType="phone-pad"
+        // keyboardType="phone-pad"
         ref={inputRef5}
         style={
           input5.length > 0
@@ -148,7 +148,7 @@ function OtpInput(props) {
         value={input6}
         returnKeyType="done"
         clearTextOnFocus={true}
-        keyboardType="phone-pad"
+        // keyboardType="phone-pad"
         ref={inputRef6}
         style={
           input6.length > 0

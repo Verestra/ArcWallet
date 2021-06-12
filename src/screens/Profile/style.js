@@ -43,10 +43,26 @@ const styles = StyleSheet.create ({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#e6e6e6',
-        fontFamily: 'Kanit-SemiBold',
+        color: '#88888F',
+        fontFamily: 'NunitoSans-SemiBold',
       },
       button2Confirmed: {
         backgroundColor: '#6379F4',
+      },
+      boxButton: {
+        width: '100%',
+        alignSelf: 'center',
+        paddingBottom: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 10,
+      },
+      textWhite: {
+        color: '#fff',
+      },
+      semiBold: {
+        fontFamily: 'NunitoSans-SemiBold',
+        color: '#88888F',
       },
     });
 

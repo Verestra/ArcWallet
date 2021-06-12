@@ -5,9 +5,10 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  StatusBar,
   StyleSheet,
 } from 'react-native';
-import {Card, CardItem, Left, Right, Body} from 'native-base';
+import {Card, Icon, CardItem, Left, Right, Body} from 'native-base';
 
 const TopUp = ({navigation}) => {
     const virtualAccNum = '2389 081393877946';
@@ -23,16 +24,18 @@ const TopUp = ({navigation}) => {
     };
   return (
     <View>
-      <View style={styles.header}>
-        <Image
-          style={styles.backIcon}
-          source={require('../../assets/img/arrow-left.png')}
-        />
-        <Text style={styles.title}>Top Up</Text>
-      </View>
+      <StatusBar
+            animated={true}
+            backgroundColor="#FFFFFF"/>
+            <CardItem style={styles.headerCard}>
+              <Left>
+                <Icon onPress={() => navigation.goBack() } type="MaterialCommunityIcons" name="arrow-left" style={{color: '#4D4B57'}} />
+                <Text style={styles.text1}>Transaction</Text>
+              </Left>
+            </CardItem>
       <ScrollView>
         <View style={styles.container}>
-          <View style={styles.innerContainer}>
+          <View elevation={5}  style={styles.innerContainer}>
             <View style={styles.plusIcon}>
               <Image
                 style={{width: 50, height: 50, alignSelf: 'center', margin: 10}}
@@ -61,7 +64,10 @@ const TopUp = ({navigation}) => {
             </View>
           </View>
         </View>
-        <View>
+        <Text style={{ fontFamily: 'NunitoSans-Regular',textAlign: 'center', color: '#7A7886'}}>
+        We provide you virtual account number for top up via nearest ATM.
+          </Text>
+        <View style={{marginBottom: 100}}>
           <Text
             style={{
               fontWeight: 'bold',
@@ -84,7 +90,7 @@ const TopUp = ({navigation}) => {
               }}>
               1
             </Text>
-            <Text style={{textAlignVertical: 'center', color: '#7A7886'}}>
+            <Text style={styles.text4}>
               {step.one}
             </Text>
           </Card>
@@ -100,7 +106,7 @@ const TopUp = ({navigation}) => {
               }}>
               2
             </Text>
-            <Text style={{textAlignVertical: 'center', color: '#7A7886'}}>
+            <Text style={styles.text4}>
               {step.two}
             </Text>
           </Card>
@@ -116,7 +122,7 @@ const TopUp = ({navigation}) => {
               }}>
               3
             </Text>
-            <Text style={{textAlignVertical: 'center', color: '#7A7886'}}>
+            <Text style={styles.text4}>
               {step.three}
             </Text>
           </Card>
@@ -132,7 +138,7 @@ const TopUp = ({navigation}) => {
               }}>
               4
             </Text>
-            <Text style={{textAlignVertical: 'center', color: '#7A7886'}}>
+            <Text style={styles.text4}>
               {step.four}
             </Text>
           </Card>
@@ -148,7 +154,7 @@ const TopUp = ({navigation}) => {
               }}>
               5
             </Text>
-            <Text style={{textAlignVertical: 'center', color: '#7A7886'}}>
+            <Text style={styles.text4}>
               {step.five}
             </Text>
           </Card>
@@ -164,7 +170,7 @@ const TopUp = ({navigation}) => {
               }}>
               6
             </Text>
-            <Text style={{textAlignVertical: 'center', color: '#7A7886'}}>
+            <Text style={styles.text4}>
               {step.six}
             </Text>
           </Card>
@@ -180,7 +186,7 @@ const TopUp = ({navigation}) => {
               }}>
               7
             </Text>
-            <Text style={{textAlignVertical: 'center', color: '#7A7886'}}>
+            <Text style={styles.text4}>
               {step.seven}
             </Text>
           </Card>
@@ -196,23 +202,7 @@ const TopUp = ({navigation}) => {
               }}>
               8
             </Text>
-            <Text style={{textAlignVertical: 'center', color: '#7A7886'}}>
-              {step.eight}
-            </Text>
-          </Card>
-          <Card style={styles.card}>
-            <Text
-              style={{
-                textAlignVertical: 'center',
-                color: '#6379F4',
-                fontWeight: 'bold',
-                fontSize: 20,
-                textAlign: 'center',
-                width: 50,
-              }}>
-              8
-            </Text>
-            <Text style={{textAlignVertical: 'center', color: '#7A7886'}}>
+            <Text style={styles.text4}>
               {step.eight}
             </Text>
           </Card>
@@ -224,11 +214,13 @@ const TopUp = ({navigation}) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#6379F4',
     paddingTop: 40,
     paddingBottom: 30,
     paddingLeft: 15,
     flexDirection: 'row',
+  },
+  headerCard: {
+    height: 50
   },
   title: {
     color: 'white',
@@ -240,8 +232,18 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
   },
+  text1: {
+    fontFamily: 'NunitoSans-Bold',
+    fontSize: 18,
+    color: "#514F5B",
+  },
+  text4: {
+    fontFamily: 'NunitoSans-Regular',
+    textAlignVertical: 'center',
+    color: '#7A7886',
+    maxWidth: 250
+  },
   container: {
-    backgroundColor: '#6379F4',
     height: 150,
     padding: 20,
   },
@@ -261,7 +263,7 @@ const styles = StyleSheet.create({
   },
   card: {
       flexDirection: 'row',
-      height:80,
+      height: 80,
       width:'90%',
       alignSelf:'center',
       borderRadius:10,

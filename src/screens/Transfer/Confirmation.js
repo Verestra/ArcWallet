@@ -3,12 +3,14 @@ import styles from './style';
 import{ KeyboardAvoidingView,StatusBar } from 'react-native';
 import { Button, List, ListItem, View, Container, CardItem, Thumbnail, Content, Left, Body, Icon, Text } from 'native-base';
 
-function Confirmation ({navigation}) {
+function Confirmation ({navigation, route}) {
+    const { receiver,name, pict, phone, amount, date, note, time} = route.params;
+    console.log(receiver,name, pict, phone, amount, note,  date, time)
     const details = [
         {
             id: 1,
             title: 'Amount',
-            body: 'Rp100.000',
+            body: `Rp${amount}`,
         }, 
         {
             id: 2,
@@ -18,12 +20,12 @@ function Confirmation ({navigation}) {
         {
             id: 3,
             title: 'Date & Time',
-            body: 'May 11, 2020 - 12.20',
+            body: `${date}, ${time}`,
         }, 
         {
             id: 4,
             title: 'Notes',
-            body: 'For buying some socks',
+            body: note,
         }]
     return (
         <Container>
@@ -42,11 +44,11 @@ function Confirmation ({navigation}) {
             <Text style={{...styles.text1, marginBottom: 30}}>Transfer To</Text>
                 <ListItem elevation={5} style={{backgroundColor: '#FFFFFF', borderRadius: 10, padding: 10, marginLeft: -5}} thumbnail>
                     <Left>
-                        <Thumbnail square source={require('../../assets/img/pic-samuel.png')}/>
+                        <Thumbnail square source={pict}/>
                     </Left>
                     <Body>
-                        <Text style={styles.text2}>Samuel Suhi</Text>
-                        <Text style={styles.text3}>+62 813-8492-9994</Text>
+                        <Text style={styles.text2}>{name}</Text>
+                        <Text style={styles.text3}>{phone}</Text>
                     </Body>
                 </ListItem>
             </List>
@@ -58,9 +60,25 @@ function Confirmation ({navigation}) {
                     <Text style={{...styles.text3, marginBottom: 15}}>{item.title}</Text>
                     <Text style={styles.text1}>{item.body}</Text>
                 </Body>
-            </ListItem>
+                </ListItem>
                 )}
-                <Button style={{borderRadius: 12, height: 57, backgroundColor: '#6379F4'}} block><Text style={{fontFamily: 'NunitoSans-Bold'}}> Continue  </Text></Button>
+                <Button 
+                onPress={() => {
+                    /* 1. Navigate to the Success route with state passed */
+                    navigation.navigate('PinConfirmation', {
+                      receiver: receiver,
+                      name: name,
+                      pict: pict,
+                      phone: phone,
+                      amount: amount,
+                      note: note,
+                      date: date,
+                      time: time
+                    });
+                }}
+                style={{borderRadius: 12, height: 57, backgroundColor: '#6379F4'}} block>
+                <Text style={{fontFamily: 'NunitoSans-Bold'}}> Continue  </Text>
+                </Button>
             </View>
             </KeyboardAvoidingView>
         </Content>

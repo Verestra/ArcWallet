@@ -29,10 +29,11 @@ const styles = StyleSheet.create ({
     cardTransaction: {
         borderRadius: 10,
         backgroundColor: '#EAEDFF',
-        width: 150,
-        padding: 20,
         marginTop: 30,
-        marginBottom: 30
+        marginBottom: 30,
+        height: 57,
+        display:'flex',
+        justifyContent: 'center'
     },
     cardHistory: {
         display: 'flex',
@@ -70,8 +71,8 @@ const styles = StyleSheet.create ({
         color: '#6379F4'
     },
     arrowUp: {
-        fontSize: 30,
-        color: '#608DE2'
+        fontSize: 28,
+        color: '#608DE2',
     },
     bell: {
         fontSize: 30,

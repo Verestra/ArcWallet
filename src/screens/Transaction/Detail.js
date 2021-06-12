@@ -121,7 +121,7 @@ function TransactionDetail ({navigation}) {
         <View style={styles.containerHistory}>
           <View style={styles.cardHistory}>
             <Text style={styles.text1}>Transaction History</Text>
-            <Text style={styles.blueText}>See all</Text>
+            <Text onPress={()=> navigation.navigate('TransactionHistory')} style={styles.blueText}>See all</Text>
           </View>
           {history.map((item, i) => (
             <List key={i} style={{marginLeft: -15, marginBottom: 20}}>

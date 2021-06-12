@@ -1,195 +1,75 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import {Card, CardItem, Left, Right, Body, Button} from 'native-base';
+import styles from '../Transfer/style.js';
+import{ KeyboardAvoidingView,StatusBar, Image } from 'react-native';
+import { Button, List, ListItem, View, Container, CardItem, Thumbnail, Content, Left, Body, Icon, Text } from 'native-base';
 
-function Failed() {
-  const detail = {
-    amount: '100.000',
-    balance: '20.000',
-    date: 'May 11, 2020',
-    time: '12.20',
-    notes: 'For buying some socks',
-  };
-  const from = {
-    name: 'Robert Chandler',
-    number: '2093023934',
-  };
-  const to = {
-    name: 'Samuel Chandler',
-    number: '08283939022',
-  };
-  const whyFailed =
-    'We can’t transfer your money at the moment, we recommend you to check your internet connection and try again.';
+function Failed({navigation, route}) {
+  const { receiver,name, pict, phone, amount, date, note, time} = route.params;
+    console.log(receiver,name, pict, phone, amount, note,  date, time)
+    const details = [
+        {
+            id: 1,
+            title: 'Amount',
+            body: `Rp${amount}`,
+        }, 
+        {
+            id: 2,
+            title: 'Balance Left',
+            body: 'Rp20.000',
+        }, 
+        {
+            id: 3,
+            title: 'Date & Time',
+            body: `${date}, ${time}`,
+        }, 
+        {
+            id: 4,
+            title: 'Notes',
+            body: note,
+        }]
   return (
-    <ScrollView>
-      <View>
-        <View style={styles.header}>
-          <Text style={styles.pageName}> Transfer Details</Text>
-        </View>
-        <View style={{padding: 10}}>
-          <View style={{alignItems: 'center', marginVertical: 30}}>
-            <Image source={require('../../assets/img/failed.png')} />
-            <Text style={styles.status}>Transfer Failed</Text>
-            <Text style={styles.failedText}>{whyFailed}</Text>
-          </View>
-
-          <View style={{flexDirection: 'row'}}>
-            <View style={styles.detailTransfer}>
-              <Text style={styles.detailMenu}>Amount</Text>
-              <Text style={styles.detailValue}>Rp {detail.amount}</Text>
+      <Container>
+            <StatusBar
+            animated={true}
+            backgroundColor="#FFFFFF"/>
+        <Content>
+            <KeyboardAvoidingView>
+            <View style={{padding: 20}}>
+              <View style={{alignItems: 'center', marginVertical: 30,}}>
+                <Image source={require('../../assets/img/failed.png')} />
+                <Text style={{...styles.text1, marginVertical: 30}}>Transfer Failed</Text>
+              </View>
+                <Text style={{...styles.text1, marginBottom: 30}}> Details </Text>
+                {details.map((item, i) => 
+                <ListItem key={i} elevation={5} style={{backgroundColor: '#FFFFFF', borderRadius: 10, padding: 5, marginLeft: -5, marginBottom: 20}} thumbnail>
+                <Body>
+                    <Text style={{...styles.text3, marginBottom: 15}}>{item.title}</Text>
+                    <Text style={styles.text1}>{item.body}</Text>
+                </Body>
+                </ListItem>
+                )}
             </View>
-            <View style={styles.detailTransfer}>
-              <Text style={styles.detailMenu}>Balance Left</Text>
-              <Text style={styles.detailValue}> RP {detail.balance}</Text>
-            </View>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <View style={styles.detailTransfer}>
-              <Text style={styles.detailMenu}>Date</Text>
-              <Text style={styles.detailValue}>{detail.date}</Text>
-            </View>
-            <View style={styles.detailTransfer}>
-              <Text style={styles.detailMenu}>Time</Text>
-              <Text style={styles.detailValue}>{detail.time}</Text>
-            </View>
-          </View>
-          <View style={styles.detailTransfer2}>
-            <Text style={styles.detailMenu}>Notes </Text>
-            <Text style={styles.detailValue}>{detail.notes}</Text>
-          </View>
-          <Text style={styles.detailValue}>From</Text>
-          <View style={styles.detailuserTransfer}>
-            <Image source={require('../../assets/img/profile-pic.png')} />
-            <View>
-              <Text style={styles.username}>{from.name}</Text>
-              <Text style={styles.usernumber}>{from.number}</Text>
-            </View>
-          </View>
-          <Text style={styles.detailValue}>To</Text>
-          <View style={styles.detailuserTransfer}>
-            <Image source={require('../../assets/img/pic-samuel.png')} />
-            <View>
-              <Text style={styles.username}>{to.name}</Text>
-              <Text style={styles.usernumber}>{to.number}</Text>
-            </View>
-          </View>
-          <Button style={styles.btnHome}>
-            <Text style={styles.btnText}>Back To Home</Text>
-          </Button>
-        </View>
-      </View>
-    </ScrollView>
+            <List style={{ marginBottom: 10, padding : 20}}>
+            <Text style={{...styles.text1, marginBottom: 30}}>Transfer To</Text>
+                <ListItem elevation={5} style={{backgroundColor: '#FFFFFF', borderRadius: 10, padding: 10, marginLeft: -5}} thumbnail>
+                    <Left>
+                        <Thumbnail square source={pict}/>
+                    </Left>
+                    <Body>
+                        <Text style={styles.text2}>{name}</Text>
+                        <Text style={styles.text3}>{phone}</Text>
+                    </Body>
+                </ListItem>
+                <Button 
+                onPress={()=> navigation.goBack()}
+                style={{borderRadius: 12, height: 57, backgroundColor: '#6379F4',marginTop: 50, marginBottom: 30}} block>
+                <Text style={{fontFamily: 'NunitoSans-Bold', color: '#F9F9F9'}}> Try Again  </Text>
+               </Button>
+            </List>
+            </KeyboardAvoidingView>
+        </Content>
+      </Container>
   );
 }
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#6379F4',
-    height: 100,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    paddingTop: 50,
-  },
-  pageName: {
-    fontFamily: 'NunitoSans',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: 20,
-    textAlign: 'center',
-    color: 'white',
-  },
-  status: {
-    fontFamily: 'NunitoSans',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: 22,
-    color: '#4D4B57',
-    marginTop: 20,
-  },
-  detailTransfer: {
-    marginBottom: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    width: '49%',
-    padding: 10,
-    marginRight: 10,
-  },
-  detailTransfer2: {
-    marginBottom: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    width: '100%',
-    padding: 20,
-  },
-  detailuserTransfer: {
-    marginBottom: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    width: '100%',
-    padding: 20,
-    flexDirection: 'row',
-  },
-  detailMenu: {
-    fontFamily: 'NunitoSans',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: 16,
-    lineHeight: 22,
-    color: '#7A7886',
-    marginBottom: 15,
-  },
-  detailValue: {
-    fontFamily: 'NunitoSans',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: 18,
-    lineHeight: 25,
-    color: '#514F5B',
-  },
-  username: {
-    fontFamily: 'NunitoSans',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#4D4B57',
-    marginLeft: 10,
-  },
-  usernumber: {
-    fontFamily: 'NunitoSans',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: 14,
-    color: '#7A7886',
-    marginLeft: 10,
-  },
-  btnHome: {
-    backgroundColor: '#6379F4',
-    width: '100%',
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 30,
-    alignItems: 'center',
-  },
-  btnText: {
-    fontFamily: 'NunitoSans',
-    fontStyle: 'normal',
-    fontSize: 18,
-    color: 'white',
-    marginLeft: 140,
-  },
-  failedText: {
-    fontFamily: 'Nunito Sans',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: 16,
-    color: '#7A7886',
-    textAlign:'center',
-  },
-});
+
 export default Failed;

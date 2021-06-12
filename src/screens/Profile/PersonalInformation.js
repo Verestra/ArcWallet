@@ -48,7 +48,7 @@ function PersonalInformation({...props}) {
       </Card>
       <Card style={styles.card}>
         <Text style={styles.menuInCard}>Phone Number</Text>
-        <Text style={{color:'blue',marginLeft:'80%'}}>Manage</Text>
+        <Text onPress={()=> props.navigation.navigate('ManagePhoneNumber')} style={{color:'blue',marginLeft:'80%'}}>Manage</Text>
         <Text style={styles.valueInCard}>{information.phoneNumber}</Text>
       </Card>
     </View>

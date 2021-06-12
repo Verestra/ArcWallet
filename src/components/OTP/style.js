@@ -18,6 +18,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: '#A9A9A9',
+    color: '#3A3D42'
   },
   borderPrimary: {
     borderColor: '#6379F4',
