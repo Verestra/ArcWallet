@@ -1,23 +1,70 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Form, Item, Input, Icon, Content} from 'native-base';
 import styles from './style';
 import OtpInput from '../../components/OTP/OtpInput';
-function ResetPassword() {
+import {
+  postSendOTP,
+  postVerifyOTP,
+  postResetPassword,
+} from './../../redux/actions/auth';
+import {API_URL} from '@env';
+import {persistor} from './../../redux/store';
+import {connect} from 'react-redux';
+function ResetPassword(props) {
+  const {navigation} = props;
+  const {auth} = props;
   const [eyeVisible, setEyeVisible] = useState(false);
   const [password, setPassword] = useState('');
   const [step, setStep] = useState(0);
   const [email, setEmail] = useState('');
   const [otp, setOTP] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  useEffect(() => {
+    if (props.auth.isFulfilled) {
+      setStep(step + 1);
+      persistor.purge();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.auth]);
   const emailRules =
     /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\]\\.,;:\s@\\"]+\.)+[^<>()[\]\\.,;:\s@\\"]{2,})$/;
+  const handleSubmit = event => {
+    if (step === 0) {
+      const postData = {email: email};
+      console.log('sended');
+      props.postSendOTP(`${API_URL}/v1/auth/reset-password`, postData);
+    } else if (step === 1) {
+      const postData = {otp, email};
+      console.log('Verified');
+      props.postVerifyOTP(`${API_URL}/v1/auth/otp-verification`, postData);
+    } else if (step === 2) {
+      const postData = {email, otp, password: confirmPassword};
+      console.log('Success Reset');
+      props.postResetPassword(`${API_URL}/v1/auth/new-password`, postData);
+    } else if (step === 3) {
+      persistor.purge();
+      navigation.navigate('Login');
+    }
+    event.preventDefault();
+  };
   return (
     <View style={styles.authContainer}>
       <View style={styles.authHeader}>
         <Text style={styles.textHeader}>Zwallet</Text>
       </View>
       <View style={styles.formContainer}>
+        {step === 3 ? (
+          <Icon
+            name="checkmark-circle"
+            style={{
+              fontSize: 100,
+              color: '#1EC15F',
+              marginTop: 40,
+              alignSelf: 'center',
+            }}
+          />
+        ) : null}
         <Text
           style={
             step === 1
@@ -28,13 +75,19 @@ function ResetPassword() {
                 }
               : {...styles.textHeader, ...styles.textBlack}
           }>
-          {step === 1 ? 'Please input your OTP' : 'Reset Password'}
+          {step === 1
+            ? 'Please input your OTP'
+            : step === 3
+            ? 'Password Changed!'
+            : 'Reset Password'}
         </Text>
         <Text style={styles.subTextHeader}>
           {step === 0
             ? 'Enter your Zwallet e-mail so we can send you a password reset link.'
             : step === 1
             ? 'We have sent your OTP (One Time Password) code via Email'
+            : step === 3
+            ? 'Click button to Login'
             : 'Create and confirm your new password so you can login to Zwallet.'}
         </Text>
         {step === 0 ? (
@@ -67,7 +120,7 @@ function ResetPassword() {
           </Form>
         ) : step === 1 ? (
           <OtpInput changeHandler={text => setOTP(text)} />
-        ) : (
+        ) : step === 2 ? (
           <Form>
             <Item
               style={
@@ -140,7 +193,7 @@ function ResetPassword() {
               />
             </Item>
           </Form>
-        )}
+        ) : null}
         {step === 0 ? (
           <Content style={styles.boxButton}>
             <TouchableOpacity
@@ -154,17 +207,21 @@ function ResetPassword() {
                   ? styles.button2
                   : {...styles.button2, ...styles.button2Confirmed}
               }
-              onPress={() => setStep(1)}>
-              <Text
-                style={
-                  !email
-                    ? styles.semiBold
-                    : email && !emailRules.test(email)
-                    ? styles.semiBold
-                    : {...styles.semiBold, ...styles.textWhite}
-                }>
-                Confirm
-              </Text>
+              onPress={e => handleSubmit(e)}>
+              {auth.isPending ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text
+                  style={
+                    !email
+                      ? styles.semiBold
+                      : email && !emailRules.test(email)
+                      ? styles.semiBold
+                      : {...styles.semiBold, ...styles.textWhite}
+                  }>
+                  Confirm
+                </Text>
+              )}
             </TouchableOpacity>
           </Content>
         ) : step === 1 ? (
@@ -178,23 +235,27 @@ function ResetPassword() {
                   ? styles.button2
                   : {...styles.button2, ...styles.button2Confirmed}
               }
-              onPress={() => setStep(2)}>
-              <Text
-                style={
-                  !otp
-                    ? styles.semiBold
-                    : otp && otp.length < 6
-                    ? styles.semiBold
-                    : {...styles.semiBold, ...styles.textWhite}
-                }>
-                Confirm
-              </Text>
+              onPress={e => handleSubmit(e)}>
+              {auth.isPending ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text
+                  style={
+                    !otp
+                      ? styles.semiBold
+                      : otp && otp.length < 6
+                      ? styles.semiBold
+                      : {...styles.semiBold, ...styles.textWhite}
+                  }>
+                  Confirm
+                </Text>
+              )}
             </TouchableOpacity>
           </Content>
-        ) : (
+        ) : step === 2 ? (
           <Content style={styles.boxButton}>
             <TouchableOpacity
-              onPress={() => console.log('reset-password')}
+              onPress={e => handleSubmit(e)}
               disabled={
                 !confirmPassword || !password
                   ? true
@@ -211,17 +272,43 @@ function ResetPassword() {
                   ? styles.button2
                   : {...styles.button2, ...styles.button2Confirmed}
               }>
-              <Text
-                style={
-                  !confirmPassword || !password
-                    ? styles.semiBold
-                    : (password && password.length < 8) ||
-                      (confirmPassword && confirmPassword !== password)
-                    ? styles.semiBold
-                    : {...styles.semiBold, ...styles.textWhite}
-                }>
-                Reset Password
-              </Text>
+              {auth.isPending ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text
+                  style={
+                    !confirmPassword || !password
+                      ? styles.semiBold
+                      : (password && password.length < 8) ||
+                        (confirmPassword && confirmPassword !== password)
+                      ? styles.semiBold
+                      : {...styles.semiBold, ...styles.textWhite}
+                  }>
+                  Reset Password
+                </Text>
+              )}
+            </TouchableOpacity>
+          </Content>
+        ) : (
+          <Content style={styles.boxButton}>
+            <TouchableOpacity
+              onPress={e => handleSubmit(e)}
+              disabled={
+                !confirmPassword || !password
+                  ? true
+                  : (password && password.length < 8) ||
+                    (confirmPassword && confirmPassword !== password)
+                  ? true
+                  : false
+              }
+              style={{...styles.button2, ...styles.button2Confirmed}}>
+              {auth.isPending ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text style={{...styles.semiBold, ...styles.textWhite}}>
+                  Login Now
+                </Text>
+              )}
             </TouchableOpacity>
           </Content>
         )}
@@ -229,4 +316,18 @@ function ResetPassword() {
     </View>
   );
 }
-export default ResetPassword;
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = dispatch => ({
+  postSendOTP: (url, data) => {
+    dispatch(postSendOTP(url, data));
+  },
+  postVerifyOTP: (url, data) => {
+    dispatch(postVerifyOTP(url, data));
+  },
+  postResetPassword: (url, data, token) => {
+    dispatch(postResetPassword(url, data, token));
+  },
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

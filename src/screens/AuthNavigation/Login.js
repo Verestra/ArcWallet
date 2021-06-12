@@ -19,7 +19,7 @@ function Login(props) {
     props.postLogin(`${API_URL}/v1/auth/login`, postData);
     event.preventDefault();
   };
-  console.log(auth);
+  console.log(props.auth);
   return (
     <View style={styles.authContainer}>
       <View style={styles.authHeader}>
@@ -99,12 +99,6 @@ function Login(props) {
             </TouchableOpacity>
           </Item>
         </Form>
-        {auth.isPending ? (
-          <ActivityIndicator size="large" color="#6379F4" />
-        ) : auth.isRejected && auth.err ? (
-          <Text>{auth.isRejected && auth.err ? 'Error Rejected' : null}</Text>
-        ) : null}
-
         <Content style={styles.boxButton}>
           <TouchableOpacity
             disabled={
@@ -124,17 +118,25 @@ function Login(props) {
                 : {...styles.button2, ...styles.button2Confirmed}
             }
             onPress={e => handleSubmit(e)}>
-            <Text
-              style={
-                !email || !password
-                  ? styles.semiBold
-                  : (password && password.length < 8) ||
-                    (email && !emailRules.test(email))
-                  ? styles.semiBold
-                  : {...styles.semiBold, ...styles.textWhite}
-              }>
-              Login
-            </Text>
+            {auth.isPending ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : auth.isRejected && auth.err ? (
+              <Text>
+                {auth.isRejected && auth.err ? 'Error Rejected' : null}
+              </Text>
+            ) : (
+              <Text
+                style={
+                  !email || !password
+                    ? styles.semiBold
+                    : (password && password.length < 8) ||
+                      (email && !emailRules.test(email))
+                    ? styles.semiBold
+                    : {...styles.semiBold, ...styles.textWhite}
+                }>
+                Login
+              </Text>
+            )}
           </TouchableOpacity>
         </Content>
       </View>

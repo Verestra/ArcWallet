@@ -1,19 +1,81 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {Form, Item, Input, Icon, Footer, Content} from 'native-base';
 import styles from './style';
 import OtpInput from '../../components/OTP/OtpInput';
+import {API_URL} from '@env';
+import Axios from 'axios';
 function Register(props) {
   const {navigation} = props;
   const [eyeVisible, setEyeVisible] = useState(false);
+  const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [step, setStep] = useState(0);
   const [otp, setOTP] = useState('');
   const [pin, setPin] = useState('');
+  const [msgFetch, setMsgFetch] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  useEffect(() => {
+    if (isFulfilled) {
+      setStep(step + 1);
+      setIsError(false);
+      setIsFulfilled(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFulfilled]);
   const emailRules =
     /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\]\\.,;:\s@\\"]+\.)+[^<>()[\]\\.,;:\s@\\"]{2,})$/;
+  const handleSubmit = event => {
+    setIsLoading(true);
+    if (step === 0) {
+      const postData = {email, username};
+      Axios.post(`${API_URL}/v1/auth/generate-otp`, postData)
+        .then(res => {
+          setMsgFetch(res.data.message);
+          setIsFulfilled(true);
+          setIsLoading(false);
+        })
+        .catch(err => {
+          setIsError(true);
+          console.log(err);
+          setIsLoading(false);
+        });
+    } else if (step === 1) {
+      const postData = {email, otp};
+      Axios.post(`${API_URL}/v1/auth/otp-verification`, postData)
+        .then(res => {
+          setMsgFetch(res.data.message);
+          setIsFulfilled(true);
+          setIsLoading(false);
+        })
+        .catch(err => {
+          setIsError(true);
+          console.log(err);
+          setIsLoading(false);
+        });
+    } else if (step === 2) {
+      const postData = {email, username, pin, password};
+      Axios.post(`${API_URL}/v1/auth/register`, postData)
+        .then(res => {
+          setMsgFetch(res.data.message);
+          setIsFulfilled(true);
+          setIsLoading(false);
+        })
+        .catch(err => {
+          setIsError(true);
+          console.log(err);
+          setIsLoading(false);
+        });
+    } else if (step === 3) {
+      setIsError(false);
+      setIsFulfilled(false);
+      navigation.navigate('Login');
+    }
+    event.preventDefault();
+  };
   return (
     <View style={styles.authContainer}>
       <View style={styles.authHeader}>
@@ -163,17 +225,21 @@ function Register(props) {
                   ? styles.button2
                   : {...styles.button2, ...styles.button2Confirmed}
               }
-              onPress={() => setStep(2)}>
-              <Text
-                style={
-                  !otp
-                    ? styles.semiBold
-                    : otp && otp.length < 6
-                    ? styles.semiBold
-                    : {...styles.semiBold, ...styles.textWhite}
-                }>
-                Confirm
-              </Text>
+              onPress={e => handleSubmit(e)}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text
+                  style={
+                    !otp
+                      ? styles.semiBold
+                      : otp && otp.length < 6
+                      ? styles.semiBold
+                      : {...styles.semiBold, ...styles.textWhite}
+                  }>
+                  Confirm
+                </Text>
+              )}
             </TouchableOpacity>
           </Content>
         ) : step === 2 ? (
@@ -187,33 +253,41 @@ function Register(props) {
                   ? styles.button2
                   : {...styles.button2, ...styles.button2Confirmed}
               }
-              onPress={() => setStep(3)}>
-              <Text
-                style={
-                  !pin
-                    ? styles.semiBold
-                    : pin && pin.length < 6
-                    ? styles.semiBold
-                    : {...styles.semiBold, ...styles.textWhite}
-                }>
-                Confirm
-              </Text>
+              onPress={e => handleSubmit(e)}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text
+                  style={
+                    !pin
+                      ? styles.semiBold
+                      : pin && pin.length < 6
+                      ? styles.semiBold
+                      : {...styles.semiBold, ...styles.textWhite}
+                  }>
+                  Confirm
+                </Text>
+              )}
             </TouchableOpacity>
           </Content>
         ) : step === 3 ? (
           <Content style={styles.boxButton}>
             <TouchableOpacity
               style={{...styles.button2, ...styles.button2Confirmed}}
-              onPress={() => navigation.navigate('Login')}>
-              <Text style={{...styles.semiBold, ...styles.textWhite}}>
-                Login Now
-              </Text>
+              onPress={e => handleSubmit(e)}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text style={{...styles.semiBold, ...styles.textWhite}}>
+                  Login Now
+                </Text>
+              )}
             </TouchableOpacity>
           </Content>
         ) : (
           <Content style={styles.boxButton}>
             <TouchableOpacity
-              onPress={() => setStep(1)}
+              onPress={e => handleSubmit(e)}
               disabled={
                 !username || !email || !password
                   ? true
@@ -232,18 +306,22 @@ function Register(props) {
                   ? styles.button2
                   : {...styles.button2, ...styles.button2Confirmed}
               }>
-              <Text
-                style={
-                  !username || !email || !password
-                    ? styles.semiBold
-                    : (username && username.length < 6) ||
-                      (password && password.length < 8) ||
-                      (email && !emailRules.test(email))
-                    ? styles.semiBold
-                    : {...styles.semiBold, ...styles.textWhite}
-                }>
-                Sign Up
-              </Text>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text
+                  style={
+                    !username || !email || !password
+                      ? styles.semiBold
+                      : (username && username.length < 6) ||
+                        (password && password.length < 8) ||
+                        (email && !emailRules.test(email))
+                      ? styles.semiBold
+                      : {...styles.semiBold, ...styles.textWhite}
+                  }>
+                  Sign Up
+                </Text>
+              )}
             </TouchableOpacity>
           </Content>
         )}
