@@ -4,7 +4,7 @@ import styles from './style';
 import{ StatusBar } from 'react-native';
 import { Dimensions } from "react-native";
 import { BarChart } from "react-native-chart-kit";
-import { Badge, List, ListItem, View, Container, CardItem, Thumbnail, Content, Left, Right, Body, Icon, Text } from 'native-base';
+import {Segment, Button, Badge, List, ListItem, View, Container, CardItem, Thumbnail, Content, Left, Right, Body, Icon, Text } from 'native-base';
 
 function TransactionDetail ({navigation}) {
     const screenWidth = Dimensions.get("window").width;
