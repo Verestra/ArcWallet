@@ -41,11 +41,7 @@ export const postResetPassword = (url, data, token) => {
   const type = 'POST_RESET_PASSWORD';
   return dispatch => {
     dispatch(fetchRequest(type));
-    Axios.post(url, data, {
-      headers: {
-        'auth-token': token,
-      },
-    })
+    Axios.post(url, data)
       .then(res => dispatch(fetchSuccess(type, res)))
       .catch(err => dispatch(fetchFailure(type, err)));
   };
@@ -54,15 +50,11 @@ export const postLogout = (url, token) => {
   const type = 'POST_LOGOUT';
   return dispatch => {
     dispatch(fetchRequest(type));
-    Axios.post(
-      url,
-      {},
-      {
-        headers: {
-          'auth-token': token,
-        },
+    Axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    )
+    })
       .then(res => dispatch(fetchSuccess(type, res)))
       .catch(err => dispatch(fetchFailure(type, err)));
   };

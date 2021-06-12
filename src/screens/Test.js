@@ -1,10 +1,14 @@
 import React from 'react';
 import {ScrollView, View, Text} from 'react-native';
-import { Content} from 'native-base'
-import { useNavigation } from '@react-navigation/native';
-
-function Test({setIsLoggedIn}) {
-  const navigation = useNavigation(); 
+import {Content} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
+import {postLogout} from './../redux/actions/auth';
+import {connect} from 'react-redux';
+import {persistor} from './../redux/store';
+import {API_URL} from '@env';
+function Test(props) {
+  const {setIsLoggedIn} = props;
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -86,7 +90,13 @@ function Test({setIsLoggedIn}) {
           Go To Add Manage Number
         </Text>
         <Text
-          onPress={() => setIsLoggedIn(false)}
+          onPress={() => {
+            props.postLogout(
+              `${API_URL}/v1/auth/logout`,
+              props.auth.results.token,
+            );
+            // persistor.purge();
+          }}
           style={{textAlign: 'center', marginBottom: 30, fontSize: 30}}>
           Logout
         </Text>
@@ -94,4 +104,12 @@ function Test({setIsLoggedIn}) {
     </View>
   );
 }
-export default Test;
+const mapStateToProps = (state, ownProps) => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = dispatch => ({
+  postLogout: (url, data) => {
+    dispatch(postLogout(url, data));
+  },
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Test);
