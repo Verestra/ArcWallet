@@ -1,16 +1,25 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Form, Item, Input, Icon, Footer, Content} from 'native-base';
 import styles from './style';
+import {connect} from 'react-redux';
+import {postLogin} from './../../redux/actions/auth';
+import {API_URL} from '@env';
 function Login(props) {
-  const {setIsLoggedIn} = props;
+  const {setIsLoggedIn, auth} = props;
   const navigation = useNavigation();
   const [eyeVisible, setEyeVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const emailRules =
     /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\]\\.,;:\s@\\"]+\.)+[^<>()[\]\\.,;:\s@\\"]{2,})$/;
+  const handleSubmit = event => {
+    const postData = {email, password};
+    props.postLogin(`${API_URL}/v1/auth/login`, postData);
+    event.preventDefault();
+  };
+  console.log(auth);
   return (
     <View style={styles.authContainer}>
       <View style={styles.authHeader}>
@@ -47,7 +56,7 @@ function Login(props) {
               onChangeText={text => setEmail(text)}
             />
           </Item>
-          {/* <Text >error email</Text> */}
+          {email && !emailRules.test(email) ? <Text>error email</Text> : null}
           <Item
             style={
               !password
@@ -82,6 +91,7 @@ function Login(props) {
               }}
             />
           </Item>
+          {password && password.length < 8 ? <Text>error password</Text> : null}
           <Item style={styles.rightSide}>
             <TouchableOpacity
               onPress={() => navigation.navigate('ResetPassword')}>
@@ -89,6 +99,12 @@ function Login(props) {
             </TouchableOpacity>
           </Item>
         </Form>
+        {auth.isPending ? (
+          <ActivityIndicator size="large" color="#6379F4" />
+        ) : auth.isRejected && auth.err ? (
+          <Text>{auth.isRejected && auth.err ? 'Error Rejected' : null}</Text>
+        ) : null}
+
         <Content style={styles.boxButton}>
           <TouchableOpacity
             disabled={
@@ -107,7 +123,7 @@ function Login(props) {
                 ? styles.button2
                 : {...styles.button2, ...styles.button2Confirmed}
             }
-            onPress={() => setIsLoggedIn(true)}>
+            onPress={e => handleSubmit(e)}>
             <Text
               style={
                 !email || !password
@@ -131,4 +147,12 @@ function Login(props) {
     </View>
   );
 }
-export default Login;
+const mapStateToProps = (state, ownProps) => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = dispatch => ({
+  postLogin: (url, data) => {
+    dispatch(postLogin(url, data));
+  },
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
