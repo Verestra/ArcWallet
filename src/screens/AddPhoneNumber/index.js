@@ -37,6 +37,7 @@ function AddPhoneNumber() {
             <TextInput
               keyboardType="numeric"
               placeholder="Enter your phone number"
+              style={{color:'black',}}
             />
           </View>
 
