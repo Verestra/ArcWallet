@@ -384,6 +384,9 @@ const mapDispatchToProps = dispatch => ({
   getUser: (url, token) => {
     dispatch(getUser(url, token));
   },
+  postLogout: (url, token) => {
+    dispatch(postLogout(url, token));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
