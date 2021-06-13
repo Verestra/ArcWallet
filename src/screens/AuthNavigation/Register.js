@@ -185,7 +185,7 @@ function Register(props) {
               />
             </Item>
             <View style={{height: 20, paddingLeft: 18}}>
-              {email && !emailRules.test(email) < 8 ? (
+              {email && !emailRules.test(email) ? (
                 <Text style={{color: 'red', fontSize: 14}}>
                   wrong email format
                 </Text>
