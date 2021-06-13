@@ -17,12 +17,13 @@ import {API_URL} from '@env';
 import {Right, Switch, Thumbnail, Icon, Button, Toast} from 'native-base';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import Axios from 'axios';
+import {getUser} from '../../redux/actions/user';
 function Profile(props) {
   const {user, navigation} = props;
   const [notifStatus, setNotifStatus] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [photo, setPhoto] = useState(null);
-  const [message, setMessage] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   useEffect(() => {
@@ -51,9 +52,9 @@ function Profile(props) {
   const uploadHandler = e => {
     let formData = new FormData();
     formData.append('image', {
-      name: !photo.fileName ? photo.assets[0].fileName : photo.fileName,
-      type: !photo.type ? photo.assets[0] : photo.type,
-      uri: !photo.uri ? photo.assets[0].uri : photo.uri,
+      name: photo.fileName || photo.assets[0].fileName,
+      type: photo.type || photo.assets[0].type,
+      uri: photo.uri || photo.assets[0].uri,
     });
     console.log(API_URL);
     console.log(formData);
@@ -64,7 +65,6 @@ function Profile(props) {
       },
     })
       .then(res => {
-        setMessage(res.data.message);
         setSuccess(true);
         setIsLoading(false);
         setPhoto(null);
@@ -381,8 +381,8 @@ const mapStateToProps = (state, ownProps) => ({
   user: state.user.results,
 });
 const mapDispatchToProps = dispatch => ({
-  postLogout: (url, data) => {
-    dispatch(postLogout(url, data));
+  getUser: (url, token) => {
+    dispatch(getUser(url, token));
   },
 });
 
