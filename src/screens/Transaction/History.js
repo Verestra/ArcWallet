@@ -73,18 +73,19 @@ function TransactionHistory ({navigation}) {
             </List>
             ))}
             </View>
-        </Content>
-            <View style={{display:'flex', flexDirection:'row', justifyContent:'space-around', marginBottom: 30}}>
-                <View style={{borderRadius: 12, backgroundColor: '#FFFFFF'}}>
-                    <Icon style={{fontSize: 30, color: '#4CEDB3'}} type="MaterialCommunityIcons" name="arrow-up"/>
+            <View style={{display:'flex', flexDirection:'row', justifyContent:'space-around', marginBottom: 50}}>
+                <View elevation={5} style={{borderRadius: 12, backgroundColor: '#FFFFFF', width: 57}}>
+                    <Icon style={{textAlign:'center',fontSize: 35, color: '#FF5B37'}} type="MaterialCommunityIcons" name="arrow-up"/>
                 </View>
-                <View style={{borderRadius: 12, backgroundColor: '#FFFFFF'}}>
-                    <Icon style={{fontSize: 30, color: '#FF5B37'}} type="MaterialCommunityIcons" name="arrow-down"/>
+                <View elevation={5} style={{borderRadius: 12, backgroundColor: '#FFFFFF', width: 57}}>
+                    <Icon style={{textAlign:'center',fontSize: 35, color: '#4CEDB3'}} type="MaterialCommunityIcons" name="arrow-down"/>
                  </View>
-                <View style={{borderRadius: 12, backgroundColor: '#FFFFFF'}}>
-                    <Text>Filter By Date</Text>
+                <View elevation={5} style={{borderRadius: 12, backgroundColor: '#FFFFFF', width: 200}}>
+                    <Text style={styles.blueText1}>Filter By Date</Text>
                  </View>
             </View>
+        </Content>
+            
       </Container>
     )
 }

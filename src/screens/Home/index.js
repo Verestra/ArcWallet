@@ -1,5 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './style';
+import {connect} from 'react-redux';
+import axios from 'axios';
+import {API_URL} from '@env';
 import {useNavigation} from '@react-navigation/native';
 import {TouchableWithoutFeedback, StatusBar} from 'react-native';
 import {
@@ -17,45 +20,37 @@ import {
   Icon,
   Text,
 } from 'native-base';
-import {API_URL} from '@env';
-import {connect} from 'react-redux';
 function Home(props) {
-  const {setIsLoggedIn, user} = props;
+  const [profile, setProfile] = useState([]);
+  const [history, setHistory] = useState([]);
+  const token = props.token;
   const navigation = useNavigation();
-  const history = [
-    {
-      id: 1,
-      pict: require('../../assets/img/pic-samuel.png'),
-      name: 'Samuel Suhi',
-      type: 'Transfer',
-      transfer: 'in',
-      money: '50.000',
-    },
-    {
-      id: 2,
-      pict: require('../../assets/img/logo-spotify.png'),
-      name: 'Spotify',
-      type: 'Subscription',
-      transfer: 'out',
-      money: '49.000',
-    },
-    {
-      id: 3,
-      pict: require('../../assets/img/logo-netflix.png'),
-      name: 'Netflix',
-      type: 'Subscription',
-      transfer: 'out',
-      money: '149.000',
-    },
-    {
-      id: 2,
-      pict: require('../../assets/img/pic-bobi.png'),
-      name: 'Spotify',
-      type: 'Transfer',
-      transfer: 'in',
-      money: '1.150.000',
-    },
-  ];
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      axios
+        .get(`${API_URL}/v1/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(res => setProfile(res.data.data))
+        .catch(err => console.log(err));
+
+      axios
+        .get(
+          `${API_URL}/v1/transactions?page=1&limit=5&start=2021-05-11&end=2021-07-13`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        .then(res => setHistory(res.data.data))
+        .catch(err => console.log(err));
+    });
+    return unsubscribe;
+  }, [navigation]);
   return (
     <Container>
       <StatusBar animated={true} backgroundColor="#6379F4" />
@@ -63,16 +58,20 @@ function Home(props) {
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate('Profile')}>
           <Left>
-            <Thumbnail
-              source={
-                !user.avatar
-                  ? require('../../assets/img/profile-pic.png')
-                  : {uri: `${API_URL}/images/${user.avatar}`}
-              }
-            />
+            {profile.avatar !== null ? (
+              <Thumbnail
+                source={{
+                  uri: `${API_URL}/images/${profile.avatar}`,
+                }}
+              />
+            ) : (
+              <Thumbnail
+                source={require('../../assets/img/blank-profile.png')}
+              />
+            )}
             <Body>
               <Text style={styles.textFade}>Balance</Text>
-              <Text style={styles.textHeader}>RP.120.000</Text>
+              <Text style={styles.textHeader}>Rp{profile.balance}</Text>
             </Body>
           </Left>
         </TouchableWithoutFeedback>
@@ -132,17 +131,49 @@ function Home(props) {
                 }}
                 thumbnail>
                 <Left>
-                  <Thumbnail square source={item.pict} />
+                  {item.type_id === 1 ? (
+                    item.receiver_avatar !== null ? (
+                      <Thumbnail
+                        source={{
+                          uri: `${API_URL}/images/${item.receiver_avatar}`,
+                        }}
+                      />
+                    ) : (
+                      <Thumbnail
+                        source={require('../../assets/img/blank-profile.png')}
+                      />
+                    )
+                  ) : item.type_id === 2 ? (
+                    <Thumbnail
+                      source={{
+                        uri: `${API_URL}/images/avatars/topup.png`,
+                      }}
+                    />
+                  ) : (
+                    <Thumbnail
+                      source={{
+                        uri: `${API_URL}/images/avatars/subscription.png`,
+                      }}
+                    />
+                  )}
                 </Left>
                 <Body>
-                  <Text style={styles.text2}>{item.name}</Text>
-                  <Text style={styles.text3}>{item.type}</Text>
+                  {item.receiver_name !== null ? (
+                    <Text style={styles.text2}>{item.receiver_name}</Text>
+                  ) : (
+                    <Text style={styles.text2}>{item.notes}</Text>
+                  )}
+                  {item.type_id === 2 ? (
+                    <Text style={styles.text2}></Text>
+                  ) : (
+                    <Text style={styles.text3}>{item.type}</Text>
+                  )}
                 </Body>
                 <Right>
-                  {item.transfer === 'in' ? (
-                    <Text style={styles.plusText}>+Rp{item.money}</Text>
+                  {item.type_id === (1 && 2) ? (
+                    <Text style={styles.plusText}>+Rp{item.amount}</Text>
                   ) : (
-                    <Text style={styles.minusText}>-Rp{item.money}</Text>
+                    <Text style={styles.minusText}>-Rp{item.amount}</Text>
                   )}
                 </Right>
               </ListItem>
@@ -153,7 +184,7 @@ function Home(props) {
     </Container>
   );
 }
-const mapStateToProps = state => ({
-  user: state.user.results,
-});
+const mapStateToProps = state => {
+  return {token: state.auth.results?.token};
+};
 export default connect(mapStateToProps)(Home);
