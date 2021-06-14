@@ -128,11 +128,12 @@ function ChangePin(props) {
                 : null}
             </Text>
             {step === 0 ? (
-              <OtpInput changeHandler={text => setPin(text)} />
+              <OtpInput changeHandler={text => setPin(text)} secureIn={true} />
             ) : step === 1 ? (
               <OtpInput
                 changeHandler={text => setNewPin(text)}
                 resetInp={true}
+                secureIn={true}
               />
             ) : (
               <Icon

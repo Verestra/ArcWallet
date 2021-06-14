@@ -164,7 +164,9 @@ function PersonalInformation(props) {
           <Text style={styles.menuInCard}>First Name</Text>
           {editF ? (
             <Form>
-              <Item style={{marginLeft: 0}}>
+              <Item
+                error={firstName && firstName.length < 3 ? true : false}
+                style={{marginLeft: 0}}>
                 <Input
                   style={styles.valueInCard}
                   value={firstName}
@@ -187,7 +189,10 @@ function PersonalInformation(props) {
                 type="FontAwesome"
                 name="window-close"
                 style={{color: 'red'}}
-                onPress={() => setEditF(false)}
+                onPress={() => {
+                  setFirstName(information.firstName);
+                  setEditF(false);
+                }}
               />
               <Icon
                 type="FontAwesome"
@@ -220,7 +225,9 @@ function PersonalInformation(props) {
           <Text style={styles.menuInCard}>Last Name</Text>
           {editL ? (
             <Form>
-              <Item style={{marginLeft: 0}}>
+              <Item
+                error={lastName && lastName.length < 3 ? true : false}
+                style={{marginLeft: 0}}>
                 <Input
                   style={styles.valueInCard}
                   value={lastName}
@@ -243,7 +250,10 @@ function PersonalInformation(props) {
                 type="FontAwesome"
                 name="window-close"
                 style={{color: 'red'}}
-                onPress={() => setEditL(false)}
+                onPress={() => {
+                  setLastName(information.lastName);
+                  setEditL(false);
+                }}
               />
               <Icon
                 type="FontAwesome"

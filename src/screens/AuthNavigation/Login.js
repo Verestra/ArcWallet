@@ -26,7 +26,13 @@ function Login(props) {
       </View>
       <View style={styles.formContainer}>
         <Text style={{...styles.textHeader, ...styles.textBlack}}>Login</Text>
-        <Text style={{...styles.text3, textAlign: 'center', paddingHorizontal: 30, marginBottom: 35}}>
+        <Text
+          style={{
+            ...styles.text3,
+            textAlign: 'center',
+            paddingHorizontal: 30,
+            marginBottom: 35,
+          }}>
           Login to your existing account to access all the features in
           ArcWallet.
         </Text>
@@ -113,45 +119,50 @@ function Login(props) {
             </TouchableOpacity>
           </Item>
         </Form>
-          <Button
+
+        <View style={{marginTop: 30}}>
+          {auth.isRejected && auth.err ? (
+            <Text style={{alignSelf: 'center', color: 'red', fontSize: 16}}>
+              {auth.isRejected && auth.err ? 'Wrong email or password' : null}
+            </Text>
+          ) : null}
+        </View>
+
+        <Button
           block
-            disabled={
-              !email || !password
-                ? true
-                : (password && password.length < 8) ||
-                  (email && !emailRules.test(email))
-                ? true
-                : false
-            }
-            style={
-              !email || !password
-                ? styles.button2
-                : (password && password.length < 8) ||
-                  (email && !emailRules.test(email))
-                ? styles.button2
-                : {...styles.button2, ...styles.button2Confirmed}
-            }
-            onPress={e => handleSubmit(e)}>
-            {auth.isPending ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : auth.isRejected && auth.err ? (
-              <Text>
-                {auth.isRejected && auth.err ? 'Error Rejected' : null}
-              </Text>
-            ) : (
-              <Text
-                style={
-                  !email || !password
-                    ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
-                    : (password && password.length < 8) ||
-                      (email && !emailRules.test(email))
-                    ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
-                    : {...styles.text1, ...styles.textWhite}
-                }>
-                Login
-              </Text>
-            )}
-          </Button>
+          disabled={
+            !email || !password
+              ? true
+              : (password && password.length < 8) ||
+                (email && !emailRules.test(email))
+              ? true
+              : false
+          }
+          style={
+            !email || !password
+              ? {...styles.button2, marginTop: 20}
+              : (password && password.length < 8) ||
+                (email && !emailRules.test(email))
+              ? {...styles.button2, marginTop: 20}
+              : {...styles.button2, ...styles.button2Confirmed, marginTop: 20}
+          }
+          onPress={e => handleSubmit(e)}>
+          {auth.isPending ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text
+              style={
+                !email || !password
+                  ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
+                  : (password && password.length < 8) ||
+                    (email && !emailRules.test(email))
+                  ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
+                  : {...styles.text1, ...styles.textWhite}
+              }>
+              Login
+            </Text>
+          )}
+        </Button>
       </View>
       <Footer style={styles.footer}>
         <Text style={{...styles.greyLink}}>Don’t have an account? Let’s </Text>

@@ -112,7 +112,13 @@ function Register(props) {
             ? 'PIN Successfully Created'
             : 'Sign Up'}
         </Text>
-        <Text style={{...styles.text3, textAlign: 'center', paddingHorizontal: 30, marginBottom: 35}}>
+        <Text
+          style={{
+            ...styles.text3,
+            textAlign: 'center',
+            paddingHorizontal: 30,
+            marginBottom: 35,
+          }}>
           {step === 1
             ? 'We have sent your OTP (One Time Password) code via Email'
             : step === 2
@@ -124,7 +130,11 @@ function Register(props) {
         {step === 1 ? (
           <OtpInput changeHandler={text => setOTP(text)} />
         ) : step === 2 ? (
-          <OtpInput changeHandler={text => setPin(text)} resetInp={true} />
+          <OtpInput
+            changeHandler={text => setPin(text)}
+            resetInp={true}
+            secureIn={true}
+          />
         ) : step === 0 ? (
           <Form>
             <Item
