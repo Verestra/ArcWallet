@@ -17,7 +17,7 @@ import {
   Text,
 } from 'native-base';
 import {connect} from 'react-redux';
-
+import CustomModal from '../../components/Modal/CustomModal';
 function ChangePin(props) {
   const {navigation} = props;
   const [pin, setPin] = useState('');
@@ -25,6 +25,8 @@ function ChangePin(props) {
   const [step, setStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isFulfilled, setIsFulfilled] = useState(false);
+  const [isErr, setIsErr] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
     if (isFulfilled) {
       setStep(step + 1);
@@ -32,14 +34,26 @@ function ChangePin(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFulfilled]);
+  useEffect(() => {
+    if (isErr) {
+      setModalVisible(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isErr]);
+  useEffect(() => {
+    if (isLoading) {
+      setModalVisible(isLoading);
+    }
+  }, [isLoading]);
   const handleSubmit = event => {
+    setIsErr(false);
     setIsLoading(true);
     if (step === 0) {
       setIsLoading(false);
       setStep(1);
     } else if (step === 1) {
+      setModalVisible(true);
       const postData = {old_pin: pin, new_pin: newPin};
-      console.log(postData);
       Axios.patch(`${API_URL}/v1/users`, postData, {
         headers: {
           Authorization: `Bearer ${props.auth.token}`,
@@ -51,7 +65,7 @@ function ChangePin(props) {
           setIsLoading(false);
         })
         .catch(err => {
-          console.log(err);
+          setIsErr(true);
           setIsLoading(false);
         });
     } else if (step === 2) {
@@ -62,6 +76,24 @@ function ChangePin(props) {
   };
   return (
     <Container>
+      {isLoading ? (
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={choice => setModalVisible(choice)}
+          isLoading={true}
+        />
+      ) : isErr && modalVisible ? (
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={choice => setModalVisible(choice)}
+          isErr={true}
+          accHandler={() => {
+            setIsErr(false);
+            setModalVisible(false);
+          }}
+          message="Update Failed"
+        />
+      ) : null}
       <StatusBar animated={true} backgroundColor="#FFFFFF" />
       <CardItem style={styles.headerCard}>
         <Left>
