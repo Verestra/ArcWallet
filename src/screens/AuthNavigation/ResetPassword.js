@@ -51,7 +51,7 @@ function ResetPassword(props) {
   return (
     <View style={styles.authContainer}>
       <View style={styles.authHeader}>
-        <Text style={styles.textHeader}>Zwallet</Text>
+        <Text style={styles.textHeader}>ArcWallet</Text>
       </View>
       <View style={styles.formContainer}>
         {step === 3 ? (
@@ -83,12 +83,12 @@ function ResetPassword(props) {
         </Text>
         <Text style={styles.subTextHeader}>
           {step === 0
-            ? 'Enter your Zwallet e-mail so we can send you a password reset link.'
+            ? 'Enter your ArcWallet e-mail so we can send you a password reset link.'
             : step === 1
             ? 'We have sent your OTP (One Time Password) code via Email'
             : step === 3
             ? 'Click button to Login'
-            : 'Create and confirm your new password so you can login to Zwallet.'}
+            : 'Create and confirm your new password so you can login to ArcWallet.'}
         </Text>
         {step === 0 ? (
           <Form>
@@ -156,6 +156,13 @@ function ResetPassword(props) {
                 }}
               />
             </Item>
+            <View style={{height: 20, paddingLeft: 18}}>
+              {password && password.length < 8 ? (
+                <Text style={{color: 'red', fontSize: 14}}>
+                  password min length is 8
+                </Text>
+              ) : null}
+            </View>
             <Item
               style={
                 !confirmPassword
@@ -192,6 +199,22 @@ function ResetPassword(props) {
                 }}
               />
             </Item>
+            <View style={{height: 20, paddingLeft: 18}}>
+              {!confirmPassword ? null : password.length < 1 ||
+                (confirmPassword && confirmPassword !== password) ? (
+                <Text style={{color: 'red', fontSize: 14}}>
+                  password doesn't match
+                </Text>
+              ) : (
+                <Text style={{color: 'green', fontSize: 14}}>
+                  <Icon
+                    name="checkmark-circle"
+                    style={{fontSize: 16, color: '#1EC15F'}}
+                  />
+                  password match
+                </Text>
+              )}
+            </View>
           </Form>
         ) : null}
         {step === 0 ? (

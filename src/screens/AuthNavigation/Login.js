@@ -19,16 +19,16 @@ function Login(props) {
     props.postLogin(`${API_URL}/v1/auth/login`, postData);
     event.preventDefault();
   };
-  console.log(props.auth);
   return (
     <View style={styles.authContainer}>
       <View style={styles.authHeader}>
-        <Text style={styles.textHeader}>Zwallet</Text>
+        <Text style={styles.textHeader}>ArcWallet</Text>
       </View>
       <View style={styles.formContainer}>
         <Text style={{...styles.textHeader, ...styles.textBlack}}>Login</Text>
         <Text style={styles.subTextHeader}>
-          Login to your existing account to access all the features in Zwallet.
+          Login to your existing account to access all the features in
+          ArcWallet.
         </Text>
         <Form>
           <Item
@@ -56,7 +56,13 @@ function Login(props) {
               onChangeText={text => setEmail(text)}
             />
           </Item>
-          {email && !emailRules.test(email) ? <Text>error email</Text> : null}
+          <View style={{height: 20, paddingLeft: 18}}>
+            {email && !emailRules.test(email) ? (
+              <Text style={{color: 'red', fontSize: 14}}>
+                wrong email format
+              </Text>
+            ) : null}
+          </View>
           <Item
             style={
               !password
@@ -91,7 +97,13 @@ function Login(props) {
               }}
             />
           </Item>
-          {password && password.length < 8 ? <Text>error password</Text> : null}
+          <View style={{height: 20, paddingLeft: 18}}>
+            {password && password.length < 8 ? (
+              <Text style={{color: 'red', fontSize: 14}}>
+                password min length is 8
+              </Text>
+            ) : null}
+          </View>
           <Item style={styles.rightSide}>
             <TouchableOpacity
               onPress={() => navigation.navigate('ResetPassword')}>
@@ -149,7 +161,7 @@ function Login(props) {
     </View>
   );
 }
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
 });
 const mapDispatchToProps = dispatch => ({

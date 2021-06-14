@@ -79,7 +79,7 @@ function Register(props) {
   return (
     <View style={styles.authContainer}>
       <View style={styles.authHeader}>
-        <Text style={styles.textHeader}>Zwallet</Text>
+        <Text style={styles.textHeader}>ArcWallet</Text>
       </View>
       <View style={styles.formContainer}>
         {step === 3 ? (
@@ -116,10 +116,10 @@ function Register(props) {
           {step === 1
             ? 'We have sent your OTP (One Time Password) code via Email'
             : step === 2
-            ? 'Create a PIN that’s contain 6 digits number for security purpose in Zwallet.'
+            ? 'Create a PIN that’s contain 6 digits number for security purpose in ArcWallet.'
             : step === 3
-            ? 'Your PIN was successfully created and you can now access all the features in Zwallet. Login to your new account and start exploring!'
-            : 'Create your account to access Zwallet.'}
+            ? 'Your PIN was successfully created and you can now access all the features in ArcWallet. Login to your new account and start exploring!'
+            : 'Create your account to access ArcWallet.'}
         </Text>
         {step === 1 ? (
           <OtpInput changeHandler={text => setOTP(text)} />
@@ -152,6 +152,13 @@ function Register(props) {
                 onChangeText={text => setUsername(text)}
               />
             </Item>
+            <View style={{height: 20, paddingLeft: 18}}>
+              {username && username.length < 6 ? (
+                <Text style={{color: 'red', fontSize: 14}}>
+                  username min length is 6
+                </Text>
+              ) : null}
+            </View>
             <Item
               style={
                 !email
@@ -177,7 +184,13 @@ function Register(props) {
                 onChangeText={text => setEmail(text)}
               />
             </Item>
-            {/* <Text >error email</Text> */}
+            <View style={{height: 20, paddingLeft: 18}}>
+              {email && !emailRules.test(email) < 8 ? (
+                <Text style={{color: 'red', fontSize: 14}}>
+                  wrong email format
+                </Text>
+              ) : null}
+            </View>
             <Item
               style={
                 !password
@@ -212,6 +225,13 @@ function Register(props) {
                 }}
               />
             </Item>
+            <View style={{height: 20, paddingLeft: 18}}>
+              {password && password.length < 8 ? (
+                <Text style={{color: 'red', fontSize: 14}}>
+                  password min length is 8
+                </Text>
+              ) : null}
+            </View>
           </Form>
         ) : null}
         {step === 1 ? (

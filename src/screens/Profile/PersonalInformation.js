@@ -8,19 +8,28 @@ import {
   StyleSheet,
 } from 'react-native';
 import {Card, CardItem, Left, Right, Body} from 'native-base';
+import {connect} from 'react-redux';
 
 function PersonalInformation({...props}) {
+  const {user} = props;
+  console.log(user);
   const information = {
-    firstName: 'Robert',
-    lastName: 'Chandler',
-    email: 'pewdiepie@gmail.com',
-    phoneNumber: '+62 813-9387-7946',
+    firstName: !user.first_name
+      ? 'please input your first name'
+      : user.first_name,
+    lastName: !user.last_name ? 'please input your last name' : user.last_name,
+    email: !user.email ? 'please input your email' : user.email,
+    phoneNumber: !user.phone_number
+      ? 'please input your phone number'
+      : `+62 ${user.phone_number.slice(1, 4)}-${user.phone_number.slice(
+          5,
+          9,
+        )}-${user.phone_number.slice(10, 14)}`,
   };
   return (
     <View style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
       <View style={styles.header}>
-        <TouchableOpacity
-        onPress={() => props.navigation.navigate('Profile')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Profile')}>
           <Image
             style={styles.backIcon}
             source={require('../../assets/img/arrow-left-black.png')}
@@ -48,7 +57,11 @@ function PersonalInformation({...props}) {
       </Card>
       <Card style={styles.card}>
         <Text style={styles.menuInCard}>Phone Number</Text>
-        <Text onPress={()=> props.navigation.navigate('ManagePhoneNumber')} style={{color:'blue',marginLeft:'80%'}}>Manage</Text>
+        <Text
+          onPress={() => props.navigation.navigate('ManagePhoneNumber')}
+          style={{color: 'blue', marginLeft: '80%'}}>
+          Manage
+        </Text>
         <Text style={styles.valueInCard}>{information.phoneNumber}</Text>
       </Card>
     </View>
@@ -77,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 27,
     color: '#7A7886',
-    marginVertical:15,
+    marginVertical: 15,
   },
   card: {
     width: '90%',
@@ -88,21 +101,26 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginBottom: 30,
   },
-  menuInCard:{
-fontFamily: 'NunitoSans',
-fontStyle: 'normal',
-fontWeight: 'normal',
-fontSize: 16,
-lineHeight: 22,
-color: '#7A7886',
+  menuInCard: {
+    fontFamily: 'NunitoSans',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 16,
+    lineHeight: 22,
+    color: '#7A7886',
   },
-valueInCard:{
-fontFamily: 'NunitoSans',
-fontStyle: 'normal',
-fontWeight: 'bold',
-fontSize: 22,
-lineHeight: 30,
-color: '#514F5B',
-  }
+  valueInCard: {
+    fontFamily: 'NunitoSans',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: 22,
+    lineHeight: 30,
+    color: '#514F5B',
+  },
 });
-export default PersonalInformation;
+const mapStateToProps = state => {
+  return {
+    user: state.user.results,
+  };
+};
+export default connect(mapStateToProps)(PersonalInformation);
