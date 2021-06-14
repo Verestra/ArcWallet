@@ -20,6 +20,7 @@ import {
   Icon,
   Text,
 } from 'native-base';
+import {setBalance} from '../../redux/actions/balance';
 function Home(props) {
   const [profile, setProfile] = useState([]);
   const [history, setHistory] = useState([]);
@@ -34,7 +35,10 @@ function Home(props) {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then(res => setProfile(res.data.data))
+        .then(res => {
+          setProfile(res.data.data);
+          props.onSetBalance(res.data.data.balance);
+        })
         .catch(err => console.log(err));
 
       axios
@@ -187,4 +191,9 @@ function Home(props) {
 const mapStateToProps = state => {
   return {token: state.auth.results?.token, balance: state.balance.balance};
 };
-export default connect(mapStateToProps)(Home);
+const mapStateToDispatch = dispatch => {
+  return {
+    onSetBalance: value => dispatch(setBalance(value)),
+  };
+};
+export default connect(mapStateToProps, mapStateToDispatch)(Home);
