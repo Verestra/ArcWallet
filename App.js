@@ -1,15 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthNavigators from './src/navigators/AuthNavigators';
 import HomeNavigators from './src/navigators/HomeNavigators';
 import {connect} from 'react-redux';
+import NotifService from './src/services/notifications/NotifService';
 
 function App(props) {
   const {isLogin} = props;
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const {Navigator, Screen} = createStackNavigator();
+
+  useEffect(() => {
+    const notif = new NotifService();
+    notif.localNotif('test', 'Message');
+  }, []);
 
   return (
     <NavigationContainer style={styles.navigationContainer}>
