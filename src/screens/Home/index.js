@@ -71,7 +71,7 @@ function Home(props) {
             )}
             <Body>
               <Text style={styles.textFade}>Balance</Text>
-              <Text style={styles.textHeader}>Rp{profile.balance}</Text>
+              <Text style={styles.textHeader}>Rp {props.balance}</Text>
             </Body>
           </Left>
         </TouchableWithoutFeedback>
@@ -185,6 +185,6 @@ function Home(props) {
   );
 }
 const mapStateToProps = state => {
-  return {token: state.auth.results?.token};
+  return {token: state.auth.results?.token, balance: state.balance.balance};
 };
 export default connect(mapStateToProps)(Home);

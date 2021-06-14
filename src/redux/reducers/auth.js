@@ -171,6 +171,7 @@ const auth = (state = intialState, {type, payload}) => {
         isPending: false,
         err: payload,
       };
+
     default:
       return state;
   }
