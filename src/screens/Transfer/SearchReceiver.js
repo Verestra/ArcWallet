@@ -93,7 +93,13 @@ function SearchReceiver(props) {
                         <Text style={styles.text3}>
                             {info} Contacts Found
                         </Text>
-                        {contacts?.map((item, i) => (
+                        {contacts?.filter((item) => {
+                            if (search == "") {
+                                return item
+                            } else if (item.username.toLowerCase().includes(search.toLowerCase())) {
+                                return item
+                            }
+                        }).map((item, i) => (
                             <List key={i} style={{ marginLeft: -25, marginBottom: 20, marginTop: 20 }}>
                                 <TouchableWithoutFeedback
                                     key={item.id}
@@ -134,4 +140,5 @@ function SearchReceiver(props) {
 const mapStateToProps = state => {
     return { token: state.auth.results?.token };
 };
-export default connect(mapStateToProps)(SearchReceiver);
+const ConnectedSearchReceiver = connect(mapStateToProps)(SearchReceiver);
+export default ConnectedSearchReceiver

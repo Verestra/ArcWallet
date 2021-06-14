@@ -81,7 +81,7 @@ function ResetPassword(props) {
             ? 'Password Changed!'
             : 'Reset Password'}
         </Text>
-        <Text style={styles.subTextHeader}>
+        <Text style={{...styles.text3, textAlign: 'center', paddingHorizontal: 30, marginBottom: 35}}>
           {step === 0
             ? 'Enter your ArcWallet e-mail so we can send you a password reset link.'
             : step === 1
@@ -105,7 +105,7 @@ function ResetPassword(props) {
                 name="mail-outline"
                 style={
                   !email
-                    ? null
+                    ? {color: '#A9A9A9'}
                     : email && !emailRules.test(email)
                     ? {color: 'red'}
                     : {color: '#6379F4'}
@@ -113,6 +113,7 @@ function ResetPassword(props) {
               />
               <Input
                 placeholder="Enter your e-mail"
+                placeholderTextColor="#A9A9A9"
                 value={email}
                 onChangeText={text => setEmail(text)}
               />
@@ -135,7 +136,7 @@ function ResetPassword(props) {
                 name="lock-outline"
                 style={
                   !password
-                    ? null
+                    ? {color: '#A9A9A9'}
                     : password && password.length < 8
                     ? {color: 'red'}
                     : {color: '#6379F4'}
@@ -143,6 +144,7 @@ function ResetPassword(props) {
               />
               <Input
                 placeholder="Create new password"
+                placeholderTextColor="#A9A9A9"
                 secureTextEntry={eyeVisible ? false : true}
                 value={password}
                 onChangeText={text => setPassword(text)}
@@ -177,7 +179,7 @@ function ResetPassword(props) {
                 name="lock-outline"
                 style={
                   !confirmPassword
-                    ? null
+                    ? {color: "#A9A9A9"}
                     : password.length < 1 ||
                       (confirmPassword && confirmPassword !== password)
                     ? {color: 'red'}
@@ -186,6 +188,7 @@ function ResetPassword(props) {
               />
               <Input
                 placeholder="Confirm new password"
+                placeholderTextColor="#A9A9A9"
                 secureTextEntry={eyeVisible ? false : true}
                 value={confirmPassword}
                 onChangeText={text => setConfirmPassword(text)}
@@ -237,10 +240,10 @@ function ResetPassword(props) {
                 <Text
                   style={
                     !email
-                      ? styles.semiBold
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
                       : email && !emailRules.test(email)
-                      ? styles.semiBold
-                      : {...styles.semiBold, ...styles.textWhite}
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
+                      : {...styles.text1, ...styles.textWhite}
                   }>
                   Confirm
                 </Text>
@@ -265,10 +268,10 @@ function ResetPassword(props) {
                 <Text
                   style={
                     !otp
-                      ? styles.semiBold
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
                       : otp && otp.length < 6
-                      ? styles.semiBold
-                      : {...styles.semiBold, ...styles.textWhite}
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
+                      : {...styles.text1, ...styles.textWhite}
                   }>
                   Confirm
                 </Text>
@@ -301,11 +304,11 @@ function ResetPassword(props) {
                 <Text
                   style={
                     !confirmPassword || !password
-                      ? styles.semiBold
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
                       : (password && password.length < 8) ||
                         (confirmPassword && confirmPassword !== password)
-                      ? styles.semiBold
-                      : {...styles.semiBold, ...styles.textWhite}
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
+                      : {...styles.text1, ...styles.textWhite}
                   }>
                   Reset Password
                 </Text>

@@ -98,7 +98,7 @@ function AmountInput(props) {
                     </List>
                     <View style={{ padding: 20 }}>
                         <Text style={{ ...styles.text2, textAlign: 'center' }}>
-                            Rp{profile.balance} Available
+                            Rp {profile.balance} Available
                         </Text>
                         <Item style={{ marginTop: 20, borderColor: 'transparent' }}>
                             <TextInputMask
@@ -127,43 +127,60 @@ function AmountInput(props) {
                                 placeholderTextColor="#B5BDCC"
                             />
                         </Item>
+                        {!amount || !notes ? (
+                            <Text style={{ textAlign: 'center', color: 'red', fontSize: 14 }}>
+                                Amount or Notes cannot be empty
+                            </Text>
+                        ) : null}
+                        {amount > profile.balance ? (
+                            <Text style={{ textAlign: 'center', color: 'red', fontSize: 14 }}>
+                                Your Balance is not Sufficient
+                            </Text>
+                        ) : null}
+                        {amount < 10000 ? (
+                            <Text style={{ textAlign: 'center', color: 'red', fontSize: 14 }}>
+                                Minimum Balance for Transfer is 10000
+                            </Text>
+                        ) : null}
                     </View>
-                    <Button
-                        disabled={
-                            !amount || !notes
-                                ? true
-                                : amount > profile.balance
+                    <View style={{paddingHorizontal: 20}}>
+                        <Button
+                            disabled={
+                                !amount || !notes
                                     ? true
-                                    : amount < 10000
-                                    ? true
-                                    : false
-                        }
-                        onPress={() => {
-                            /* 1. Navigate to the Confirmation route with state passed */
-                            navigation.navigate('Confirmation', {
-                                receiver: receiver,
-                                name: name,
-                                pict: pict,
-                                phone: phone,
-                                amount: amount,
-                                balance: profile.balance,
-                                note: notes,
-                                date: today,
-                                time: time
-                            });
-                        }}
-                        style={
-                            !amount || !notes
-                                ? styles.button2
-                                : amount > profile.balance
-                                ? styles.button2
-                                : amount < 10000
+                                    : amount > profile.balance
+                                        ? true
+                                        : amount < 10000
+                                            ? true
+                                            : false
+                            }
+                            onPress={() => {
+                                /* 1. Navigate to the Confirmation route with state passed */
+                                navigation.navigate('Confirmation', {
+                                    receiver: receiver,
+                                    name: name,
+                                    pict: pict,
+                                    phone: phone,
+                                    amount: amount,
+                                    balance: profile.balance,
+                                    note: notes,
+                                    date: today,
+                                    time: time
+                                });
+                            }}
+                            style={
+                                !amount || !notes
                                     ? styles.button2
-                                    : { ...styles.button2, ...styles.button2Confirmed }
-                        }
-                        block>
-                        <Text style={{ fontFamily: 'NunitoSans-Bold' }}> Transfer  </Text>
-                    </Button>
+                                    : amount > profile.balance
+                                        ? styles.button2
+                                        : amount < 10000
+                                            ? styles.button2
+                                            : { ...styles.button2, ...styles.button2Confirmed }
+                            }
+                            block>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold' }}> Transfer  </Text>
+                        </Button>
+                    </View>
                 </KeyboardAvoidingView>
             </Content>
         </Container>
@@ -172,4 +189,5 @@ function AmountInput(props) {
 const mapStateToProps = state => {
     return { token: state.auth.results?.token };
 };
-export default connect(mapStateToProps)(AmountInput);
+const ConnectedAmountInput = connect(mapStateToProps)(AmountInput);;
+export default ConnectedAmountInput
