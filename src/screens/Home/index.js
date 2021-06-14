@@ -72,7 +72,7 @@ function Home(props) {
             )}
             <Body>
               <Text style={styles.textFade}>Balance</Text>
-              <Text style={styles.textHeader}>Rp {profile.balance}</Text>
+              <Text style={styles.textHeader}>Rp {props.balance}</Text>
             </Body>
           </Left>
         </TouchableWithoutFeedback>
