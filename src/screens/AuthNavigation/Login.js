@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Form, Item, Input, Icon, Footer, Content} from 'native-base';
+import {Form, Item, Button, Input, Icon, Footer, Content} from 'native-base';
 import styles from './style';
 import {connect} from 'react-redux';
 import {postLogin} from './../../redux/actions/auth';
@@ -26,7 +26,7 @@ function Login(props) {
       </View>
       <View style={styles.formContainer}>
         <Text style={{...styles.textHeader, ...styles.textBlack}}>Login</Text>
-        <Text style={styles.subTextHeader}>
+        <Text style={{...styles.text3, textAlign: 'center', paddingHorizontal: 30, marginBottom: 35}}>
           Login to your existing account to access all the features in
           ArcWallet.
         </Text>
@@ -44,7 +44,7 @@ function Login(props) {
               name="mail-outline"
               style={
                 !email
-                  ? null
+                  ? {color: '#A9A9A9'}
                   : email && !emailRules.test(email)
                   ? {color: 'red'}
                   : {color: '#6379F4'}
@@ -52,6 +52,7 @@ function Login(props) {
             />
             <Input
               placeholder="Enter your e-mail"
+              placeholderTextColor="#A9A9A9"
               value={email}
               onChangeText={text => setEmail(text)}
             />
@@ -76,7 +77,7 @@ function Login(props) {
               name="lock-outline"
               style={
                 !password
-                  ? null
+                  ? {color: '#A9A9A9'}
                   : password && password.length < 8
                   ? {color: 'red'}
                   : {color: '#6379F4'}
@@ -84,6 +85,7 @@ function Login(props) {
             />
             <Input
               placeholder="Enter your password"
+              placeholderTextColor="#A9A9A9"
               secureTextEntry={eyeVisible ? false : true}
               value={password}
               onChangeText={text => setPassword(text)}
@@ -107,12 +109,12 @@ function Login(props) {
           <Item style={styles.rightSide}>
             <TouchableOpacity
               onPress={() => navigation.navigate('ResetPassword')}>
-              <Text style={{...styles.linkSmall}}>Forgot Password?</Text>
+              <Text style={{...styles.text3}}>Forgot Password?</Text>
             </TouchableOpacity>
           </Item>
         </Form>
-        <Content style={styles.boxButton}>
-          <TouchableOpacity
+          <Button
+          block
             disabled={
               !email || !password
                 ? true
@@ -140,17 +142,16 @@ function Login(props) {
               <Text
                 style={
                   !email || !password
-                    ? styles.semiBold
+                    ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
                     : (password && password.length < 8) ||
                       (email && !emailRules.test(email))
-                    ? styles.semiBold
-                    : {...styles.semiBold, ...styles.textWhite}
+                    ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
+                    : {...styles.text1, ...styles.textWhite}
                 }>
                 Login
               </Text>
             )}
-          </TouchableOpacity>
-        </Content>
+          </Button>
       </View>
       <Footer style={styles.footer}>
         <Text style={{...styles.greyLink}}>Don’t have an account? Let’s </Text>

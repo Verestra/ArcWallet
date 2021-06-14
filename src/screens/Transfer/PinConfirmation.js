@@ -56,7 +56,7 @@ function PinConfirmation(props) {
             })
             .catch(err => {
                 console.log(body)
-                console.log(err)
+                console.log(err.message)
                 navigation.replace('Failed', {
                     receiver: receiver,
                     name: name,
@@ -67,7 +67,8 @@ function PinConfirmation(props) {
                     pin: pin,
                     note: note,
                     date: date,
-                    time: time
+                    time: time,
+                    error: err.message
                 });
             });
     }
@@ -89,6 +90,16 @@ function PinConfirmation(props) {
                         <Text style={{ ...styles.text1, textAlign: 'center' }}>Enter PIN to Transfer</Text>
                         <Text style={{ ...styles.text3, textAlign: 'center', marginTop: 30, marginBottom: 30 }} >Enter your 6 digits PIN for confirmation to continue transferring money. </Text>
                         <OtpInput changeHandler={text => setPin(text)} resetInp={true} />
+                        {!pin ? (
+                            <Text style={{ textAlign: 'center', color: 'red', fontSize: 14 , marginVertical: 30}}>
+                                Please Fill The Pin
+                            </Text>
+                        ) : null}
+                        {pin && pin.length < 6 ? (
+                            <Text style={{ textAlign: 'center', color: 'red', fontSize: 14 , marginVertical: 30}}>
+                                Pin Length is not enough
+                            </Text>
+                        ) : null}
                         <Button
                             onPress={createTransactionHandler}
                             disabled={!pin ? true : pin && pin.length < 6 ? true : false}
@@ -110,4 +121,5 @@ function PinConfirmation(props) {
 const mapStateToProps = state => {
     return { token: state.auth.results?.token };
 };
-export default connect(mapStateToProps)(PinConfirmation);
+const ConnectedPinConfirmation = connect(mapStateToProps)(PinConfirmation);
+export default ConnectedPinConfirmation

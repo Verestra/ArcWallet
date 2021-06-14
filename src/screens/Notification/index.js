@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,14 +6,76 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import {Card, CardItem, Left, Right, Body} from 'native-base';
+import IncomeArrow from '../../assets/img/arrow-green-down.png';
+import ExpenseArrow from '../../assets/img/arrow-red-up.png';
+import axios from 'axios';
+import {shallowEqual, useSelector} from 'react-redux';
+import {API_URL} from '@env';
+import {useNavigation} from '@react-navigation/native';
+
+const renderText = (typeId, sender, receiver, userId, notes) => {
+  if (typeId === 3) return `${notes} Subcription`;
+  if (receiver == userId) return `Transferred from ${sender}`;
+  if (typeId === 2) return 'Top Up';
+  return `Transferred to ${sender}`;
+};
+
+const renderIcon = (typeId, receiver, userId) => {
+  if (typeId === 1 && receiver != userId) return ExpenseArrow;
+  if (typeId === 3) return ExpenseArrow;
+  return IncomeArrow;
+};
 
 function Notification() {
-  const transaction = {
-    info: 'Transfered from Jhosua Lee',
-    nominal: '220.000',
-  };
+  const auth = useSelector(state => state.auth, shallowEqual);
+  const [notifications, setNotifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const token = auth.results.token;
+  const userId = auth.results.id;
+  const navigation = useNavigation();
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get(`${API_URL}/v1/notifications?limit=100`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => {
+        setNotifications(res.data.data);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const renderItem = ({item}) => (
+    <Card style={styles.card}>
+      <View style={{alignSelf: 'center'}}>
+        <Image source={renderIcon(item.type_id, item.receiver, userId)} />
+      </View>
+      <View style={{marginLeft: 20}}>
+        <Text style={styles.info}>
+          {renderText(
+            item.type_id,
+            item.sender,
+            item.receiver,
+            userId,
+            item.notes,
+          )}
+        </Text>
+        <Text style={styles.nominal}>{item.amount}</Text>
+      </View>
+    </Card>
+  );
+
   return (
     <View
       style={{
@@ -23,7 +85,10 @@ function Notification() {
         height: '100%',
       }}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}>
           <Image
             style={styles.backIcon}
             source={require('../../assets/img/arrow-left-black.png')}
@@ -31,53 +96,21 @@ function Notification() {
         </TouchableOpacity>
         <Text style={styles.pageName}>Notification</Text>
       </View>
-      <Text style={styles.filterTime}>Today</Text>
-      <Card style={styles.card}>
-        <View style={{alignSelf: 'center'}}>
-          <Image source={require('../../assets/img/arrow-green-down.png')} />
-        </View>
-        <View style={{marginLeft: 20}}>
-          <Text style={styles.info}>{transaction.info}</Text>
-          <Text style={styles.nominal}>Rp. {transaction.nominal}</Text>
-        </View>
-      </Card>
-      <Card style={styles.card}>
-        <View style={{alignSelf: 'center'}}>
-          <Image source={require('../../assets/img/arrow-red-up.png')} />
-        </View>
-        <View style={{marginLeft: 20}}>
-          <Text style={styles.info}>Netflix Subscription</Text>
-          <Text style={styles.nominal}>Rp. 149.000</Text>
-        </View>
-      </Card>
-      <Text style={styles.filterTime}>This Week</Text>
-      <Card style={styles.card}>
-        <View style={{alignSelf: 'center'}}>
-          <Image source={require('../../assets/img/arrow-green-down.png')} />
-        </View>
-        <View style={{marginLeft: 20}}>
-          <Text style={styles.info}>Transfer to Jessica</Text>
-          <Text style={styles.nominal}>Rp. 100.000</Text>
-        </View>
-      </Card>
-      <Card style={styles.card}>
-        <View style={{alignSelf: 'center'}}>
-          <Image source={require('../../assets/img/arrow-red-up.png')} />
-        </View>
-        <View style={{marginLeft: 20}}>
-          <Text style={styles.info}>Top Up from BNI E-Banking</Text>
-          <Text style={styles.nominal}>Rp. 100.000</Text>
-        </View>
-      </Card>
-      <Card style={styles.card}>
-        <View style={{alignSelf: 'center'}}>
-          <Image source={require('../../assets/img/arrow-green-down.png')} />
-        </View>
-        <View style={{marginLeft: 20}}>
-          <Text style={styles.info}>Top Up from BNI E-Banking</Text>
-          <Text style={styles.nominal}>Rp. 100.000</Text>
-        </View>
-      </Card>
+      {/* <Text style={styles.filterTime}>Today</Text> */}
+      <FlatList
+        data={notifications}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        ListEmptyComponent={
+          <View style={{alignItems: 'center', marginTop: 20}}>
+            {isLoading ? (
+              <ActivityIndicator color="#6379F4" />
+            ) : (
+              <Text>Notifications is Empty</Text>
+            )}
+          </View>
+        }
+      />
     </View>
   );
 }

@@ -1,11 +1,15 @@
 import Axios from 'axios';
 import {fetchRequest, fetchSuccess, fetchFailure} from './fetchHandlers';
+import {setBalance} from './balance';
 export const postLogin = (url, data) => {
   const type = 'POST_LOGIN';
   return dispatch => {
     dispatch(fetchRequest(type));
     Axios.post(url, data)
-      .then(res => dispatch(fetchSuccess(type, res)))
+      .then(res => {
+        dispatch(fetchSuccess(type, res));
+        dispatch(setBalance(res.data.data.balance));
+      })
       .catch(err => dispatch(fetchFailure(type, err)));
   };
 };

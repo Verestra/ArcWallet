@@ -20,6 +20,7 @@ import {
   Icon,
   Text,
 } from 'native-base';
+import {setBalance} from '../../redux/actions/balance';
 function Home(props) {
   const [profile, setProfile] = useState([]);
   const [history, setHistory] = useState([]);
@@ -71,7 +72,7 @@ function Home(props) {
             )}
             <Body>
               <Text style={styles.textFade}>Balance</Text>
-              <Text style={styles.textHeader}>Rp{profile.balance}</Text>
+              <Text style={styles.textHeader}>Rp {props.balance}</Text>
             </Body>
           </Left>
         </TouchableWithoutFeedback>
@@ -120,6 +121,11 @@ function Home(props) {
               See all
             </Text>
           </View>
+          {history?.length === 0 && (
+            <Text style={{...styles.text3, textAlign: 'center'}}>
+              No Transaction History
+            </Text>
+          )}
           {history.map((item, i) => (
             <List key={i} style={{marginLeft: -15, marginBottom: 20}}>
               <ListItem
@@ -144,20 +150,14 @@ function Home(props) {
                       />
                     )
                   ) : item.type_id === 2 ? (
-                    <Thumbnail
-                      source={{
-                        uri: `${API_URL}/images/avatars/topup.png`,
-                      }}
-                    />
+                    <Thumbnail source={require('../../assets/img/topup.png')} />
                   ) : (
                     <Thumbnail
-                      source={{
-                        uri: `${API_URL}/images/avatars/subscription.png`,
-                      }}
+                      source={require('../../assets/img/subscription.png')}
                     />
                   )}
                 </Left>
-                <Body>
+                <Body style={{borderBottomWidth: 0}}>
                   {item.receiver_name !== null ? (
                     <Text style={styles.text2}>{item.receiver_name}</Text>
                   ) : (
@@ -169,11 +169,11 @@ function Home(props) {
                     <Text style={styles.text3}>{item.type}</Text>
                   )}
                 </Body>
-                <Right>
+                <Right style={{borderBottomWidth: 0}}>
                   {item.type_id === (1 && 2) ? (
-                    <Text style={styles.plusText}>+Rp{item.amount}</Text>
+                    <Text style={styles.plusText}>+Rp {item.amount}</Text>
                   ) : (
-                    <Text style={styles.minusText}>-Rp{item.amount}</Text>
+                    <Text style={styles.minusText}>-Rp {item.amount}</Text>
                   )}
                 </Right>
               </ListItem>
@@ -185,6 +185,11 @@ function Home(props) {
   );
 }
 const mapStateToProps = state => {
-  return {token: state.auth.results?.token};
+  return {token: state.auth.results?.token, balance: state.balance.balance};
 };
-export default connect(mapStateToProps)(Home);
+const mapStateToDispatch = dispatch => {
+  return {
+    onSetBalance: value => dispatch(setBalance(value)),
+  };
+};
+export default connect(mapStateToProps, mapStateToDispatch)(Home);

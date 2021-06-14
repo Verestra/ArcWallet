@@ -11,12 +11,12 @@ function Confirmation({ navigation, route }) {
         {
             id: 1,
             title: 'Amount',
-            body: `Rp${amount}`,
+            body: `Rp ${amount}`,
         },
         {
             id: 2,
             title: 'Balance Left',
-            body: `Rp${balance - amount}`,
+            body: `Rp ${balance - amount}`,
         },
         {
             id: 3,
