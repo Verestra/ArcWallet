@@ -47,7 +47,6 @@ function ChangePassword(props) {
       },
     )
       .then(res => {
-        setMessage(res.data.message);
         setSuccess(true);
         setIsLoading(false);
       })

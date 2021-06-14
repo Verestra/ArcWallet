@@ -56,6 +56,7 @@ function Profile(props) {
       uri: !photo.uri ? photo.assets[0].uri : photo.uri,
     });
     console.log(API_URL);
+    console.log(formData);
     Axios.patch(`${API_URL}/v1/users`, formData, {
       headers: {
         Authorization: `Bearer ${props.auth.token}`,
