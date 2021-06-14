@@ -172,8 +172,9 @@ function OtpInput(props) {
             value={input1}
             returnKeyType="next"
             clearTextOnFocus={true}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             ref={inputRef1}
+            secureTextEntry={true}
             style={
               input1.length > 0
                 ? {...styles.otp, ...styles.borderPrimary}
@@ -187,18 +188,19 @@ function OtpInput(props) {
             }}
           />
           <TextInput
+            secureTextEntry={true}
             onFocus={() => setInput2('')}
             value={input2}
             returnKeyType="next"
             clearTextOnFocus={true}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             ref={inputRef2}
             style={
               input2.length > 0
                 ? {...styles.otp, ...styles.borderPrimary}
                 : styles.otp
             }
-            underlineColor="black"
+            underlineColor="numeric"
             maxLength={1}
             onChangeText={text => {
               setInput2(text);
@@ -206,11 +208,12 @@ function OtpInput(props) {
             }}
           />
           <TextInput
+            secureTextEntry={true}
             onFocus={() => setInput3('')}
             value={input3}
             returnKeyType="next"
             clearTextOnFocus={true}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             ref={inputRef3}
             style={
               input3.length > 0
@@ -225,11 +228,12 @@ function OtpInput(props) {
             }}
           />
           <TextInput
+            secureTextEntry={true}
             onFocus={() => setInput4('')}
             value={input4}
             returnKeyType="next"
             clearTextOnFocus={true}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             ref={inputRef4}
             style={
               input4.length > 0
@@ -244,11 +248,12 @@ function OtpInput(props) {
             }}
           />
           <TextInput
+            secureTextEntry={true}
             onFocus={() => setInput5('')}
             value={input5}
             returnKeyType="next"
             clearTextOnFocus={true}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             ref={inputRef5}
             style={
               input5.length > 0
@@ -263,11 +268,12 @@ function OtpInput(props) {
             }}
           />
           <TextInput
+            secureTextEntry={true}
             onFocus={() => setInput6('')}
             value={input6}
             returnKeyType="done"
             clearTextOnFocus={true}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
             ref={inputRef6}
             style={
               input6.length > 0
