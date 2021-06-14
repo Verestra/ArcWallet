@@ -6,6 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import {Card, CardItem, Left, Right, Body} from 'native-base';
 import IncomeArrow from '../../assets/img/arrow-green-down.png';
@@ -13,7 +15,7 @@ import ExpenseArrow from '../../assets/img/arrow-red-up.png';
 import axios from 'axios';
 import {shallowEqual, useSelector} from 'react-redux';
 import {API_URL} from '@env';
-import {FlatList} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 
 const renderText = (typeId, sender, receiver, userId, notes) => {
   if (typeId === 3) return `${notes} Subcription`;
@@ -31,11 +33,13 @@ const renderIcon = (typeId, receiver, userId) => {
 function Notification() {
   const auth = useSelector(state => state.auth, shallowEqual);
   const [notifications, setNotifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const token = auth.results.token;
   const userId = auth.results.id;
-
+  const navigation = useNavigation();
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`${API_URL}/v1/notifications?limit=100`, {
         headers: {
@@ -44,9 +48,11 @@ function Notification() {
       })
       .then(res => {
         setNotifications(res.data.data);
+        setIsLoading(false);
       })
       .catch(err => {
         console.log(err);
+        setIsLoading(false);
       });
   }, []);
 
@@ -79,7 +85,10 @@ function Notification() {
         height: '100%',
       }}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}>
           <Image
             style={styles.backIcon}
             source={require('../../assets/img/arrow-left-black.png')}
@@ -92,6 +101,15 @@ function Notification() {
         data={notifications}
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        ListEmptyComponent={
+          <View style={{alignItems: 'center', marginTop: 20}}>
+            {isLoading ? (
+              <ActivityIndicator color="#6379F4" />
+            ) : (
+              <Text>Notifications is Empty</Text>
+            )}
+          </View>
+        }
       />
     </View>
   );
