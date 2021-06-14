@@ -7,7 +7,7 @@ import {persistReducer} from 'redux-persist';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth', 'balance'],
+  whitelist: ['auth', 'balance', 'user'],
 };
 
 const allReducer = combineReducers({
