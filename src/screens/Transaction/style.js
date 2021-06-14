@@ -26,7 +26,8 @@ const styles = StyleSheet.create ({
     },
     containerHistory: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginBottom: 30
     },
     cardTransaction: {
         borderRadius: 10,
@@ -70,6 +71,12 @@ const styles = StyleSheet.create ({
         fontFamily: 'NunitoSans-Regular',
         fontSize: 14,
         color: '#6379F4'
+    },
+    blueText1: {
+        fontFamily: 'NunitoSans-Bold',
+        fontSize: 18,
+        color: '#6379F4',
+        textAlign: 'center'
     },
     arrowUp: {
         fontSize: 30,
