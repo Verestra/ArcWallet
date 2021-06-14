@@ -56,7 +56,7 @@ function ChangePin(props) {
         });
     } else if (step === 2) {
       setIsLoading(false);
-      navigation.navigate('profile');
+      navigation.navigate('Profile');
     }
     event.preventDefault();
   };

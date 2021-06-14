@@ -221,23 +221,25 @@ function ChangePassword(props) {
                   </Item>
                 </>
               )}
+              {success ? null : (
+                <View style={{height: 20, paddingLeft: 18}}>
+                  {!confirmPassword ? null : password.length < 1 ||
+                    (confirmPassword && confirmPassword !== password) ? (
+                    <Text style={{color: 'red', fontSize: 14}}>
+                      password doesn't match
+                    </Text>
+                  ) : (
+                    <Text style={{color: 'green', fontSize: 14}}>
+                      <Icon
+                        name="checkmark-circle"
+                        style={{fontSize: 16, color: '#1EC15F'}}
+                      />
+                      password match
+                    </Text>
+                  )}
+                </View>
+              )}
 
-              <View style={{height: 20, paddingLeft: 18}}>
-                {!confirmPassword ? null : password.length < 1 ||
-                  (confirmPassword && confirmPassword !== password) ? (
-                  <Text style={{color: 'red', fontSize: 14}}>
-                    password doesn't match
-                  </Text>
-                ) : (
-                  <Text style={{color: 'green', fontSize: 14}}>
-                    <Icon
-                      name="checkmark-circle"
-                      style={{fontSize: 16, color: '#1EC15F'}}
-                    />
-                    password match
-                  </Text>
-                )}
-              </View>
               <View style={styles.boxButton}>
                 {success ? (
                   <Content style={styles.boxButton}>
