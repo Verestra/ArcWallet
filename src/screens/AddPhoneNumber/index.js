@@ -15,18 +15,20 @@ import Axios from 'axios';
 import {API_URL} from '@env';
 import {connect} from 'react-redux';
 import {getUser} from '../../redux/actions/user';
+import CustomModal from '../../components/Modal/CustomModal';
 function AddPhoneNumber(props) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isErr, setIsErr] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
     if (success) {
-      setSuccess(false);
       props.getUser(`${API_URL}/v1/users`, props.auth.token);
-      props.navigation.navigate('Profile');
+      setModalVisible(true);
     }
-  }, [success, props.user]);
+  }, [success]);
   const handleSubmit = () => {
     setIsLoading(true);
     Axios.post(
@@ -44,12 +46,43 @@ function AddPhoneNumber(props) {
         setIsLoading(false);
       })
       .catch(err => {
-        console.log(err);
+        setIsErr(true);
         setIsLoading(false);
+        setModalVisible(true);
       });
   };
   return (
     <KeyboardAvoidingView>
+      {success && modalVisible ? (
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={choice => setModalVisible(choice)}
+          success={true}
+          accHandler={() => {
+            setSuccess(false);
+            setModalVisible(false);
+            if (props.route.params && props.route.params.phone) {
+              props.navigation.navigate('ManagePhoneNumber', {
+                updatePhone: true,
+              });
+            } else {
+              props.navigation.navigate('Profile');
+            }
+          }}
+          message="Update Success"
+        />
+      ) : isErr && modalVisible ? (
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={choice => setModalVisible(choice)}
+          isErr={true}
+          accHandler={() => {
+            setIsErr(false);
+            setModalVisible(false);
+          }}
+          message="Update Failed"
+        />
+      ) : null}
       <View style={{width: '100%', height: '100%', backgroundColor: 'white'}}>
         <View
           style={{

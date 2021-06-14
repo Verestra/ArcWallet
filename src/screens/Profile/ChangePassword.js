@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './style';
 import {
   KeyboardAvoidingView,
@@ -25,7 +25,7 @@ import {
   Text,
 } from 'native-base';
 import {connect} from 'react-redux';
-
+import CustomModal from '../../components/Modal/CustomModal';
 function ChangePassword(props) {
   const {navigation} = props;
   const [currentPassword, setCurrentPassword] = useState('');
@@ -36,7 +36,10 @@ function ChangePassword(props) {
   const [eyeVisible2, setEyeVisible2] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isErr, setIsErr] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const handleSubmit = () => {
+    setModalVisible(true);
     Axios.patch(
       `${API_URL}/v1/users`,
       {old_password: currentPassword, new_password: confirmPassword},
@@ -52,11 +55,41 @@ function ChangePassword(props) {
       })
       .catch(err => {
         console.log(err);
+        setIsErr(true);
         setIsLoading(false);
       });
   };
+  useEffect(() => {
+    if (isErr) {
+      setModalVisible(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isErr]);
+  useEffect(() => {
+    if (isLoading) {
+      setModalVisible(isLoading);
+    }
+  }, [isLoading]);
   return (
     <Container>
+      {isLoading ? (
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={choice => setModalVisible(choice)}
+          isLoading={true}
+        />
+      ) : isErr && modalVisible ? (
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={choice => setModalVisible(choice)}
+          isErr={true}
+          accHandler={() => {
+            setIsErr(false);
+            setModalVisible(false);
+          }}
+          message="Update Failed"
+        />
+      ) : null}
       <StatusBar animated={true} backgroundColor="#FFFFFF" />
       <CardItem style={styles.headerCard}>
         <Left>
