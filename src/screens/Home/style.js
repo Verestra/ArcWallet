@@ -43,7 +43,7 @@ const styles = StyleSheet.create ({
     },
     text1: {
         fontFamily: 'NunitoSans-Bold',
-        fontSize: 18,
+        fontSize: 16,
         color: "#514F5B",
     },
     text2: {

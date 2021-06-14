@@ -5,8 +5,8 @@ import { KeyboardAvoidingView, StatusBar, Image } from 'react-native';
 import { Button, List, ListItem, View, Container, CardItem, Thumbnail, Content, Left, Body, Icon, Text } from 'native-base';
 
 function Failed({ navigation, route }) {
-    const { receiver, name, pict, phone, amount, balance, date, note, time } = route.params;
-    console.log(receiver, name, pict, phone, amount, balance, note, date, time)
+    const { receiver, name, pict, phone, amount, balance, date, note, time, err } = route.params;
+    console.log(receiver, name, pict, phone, amount, balance, note, date, time, err)
     const details = [
         {
             id: 1,
@@ -40,6 +40,7 @@ function Failed({ navigation, route }) {
                             <Image source={require('../../assets/img/failed.png')} />
                             <Text style={{ ...styles.text1, marginVertical: 30 }}>Transfer Failed</Text>
                         </View>
+                        <Text style={{...styles.text3, textAlign: 'center', color: 'red'}}>Wrong pin</Text>
                         <Text style={{ ...styles.text1, marginBottom: 30 }}> Details </Text>
                         {details.map((item, i) =>
                             <ListItem key={i} elevation={5} style={{ backgroundColor: '#FFFFFF', borderRadius: 10, padding: 5, marginLeft: -5, marginBottom: 20 }} thumbnail>

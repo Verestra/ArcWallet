@@ -110,9 +110,9 @@ function Register(props) {
             ? 'Create Security PIN'
             : step === 3
             ? 'PIN Successfully Created'
-            : 'Register'}
+            : 'Sign Up'}
         </Text>
-        <Text style={styles.subTextHeader}>
+        <Text style={{...styles.text3, textAlign: 'center', paddingHorizontal: 30, marginBottom: 35}}>
           {step === 1
             ? 'We have sent your OTP (One Time Password) code via Email'
             : step === 2
@@ -140,7 +140,7 @@ function Register(props) {
                 name="person-outline"
                 style={
                   !username
-                    ? null
+                    ? {color: '#A9A9A9'}
                     : username && username.length < 6
                     ? {color: 'red'}
                     : {color: '#6379F4'}
@@ -148,6 +148,7 @@ function Register(props) {
               />
               <Input
                 placeholder="Enter your username"
+                placeholderTextColor="#A9A9A9"
                 value={username}
                 onChangeText={text => setUsername(text)}
               />
@@ -172,7 +173,7 @@ function Register(props) {
                 name="mail-outline"
                 style={
                   !email
-                    ? null
+                    ? {color: '#A9A9A9'}
                     : email && !emailRules.test(email)
                     ? {color: 'red'}
                     : {color: '#6379F4'}
@@ -180,6 +181,7 @@ function Register(props) {
               />
               <Input
                 placeholder="Enter your e-mail"
+                placeholderTextColor="#A9A9A9"
                 value={email}
                 onChangeText={text => setEmail(text)}
               />
@@ -204,7 +206,7 @@ function Register(props) {
                 name="lock-outline"
                 style={
                   !password
-                    ? null
+                    ? {color: '#A9A9A9'}
                     : password && password.length < 8
                     ? {color: 'red'}
                     : {color: '#6379F4'}
@@ -212,6 +214,7 @@ function Register(props) {
               />
               <Input
                 placeholder="Enter your password"
+                placeholderTextColor="#A9A9A9"
                 secureTextEntry={eyeVisible ? false : true}
                 value={password}
                 onChangeText={text => setPassword(text)}
@@ -252,10 +255,10 @@ function Register(props) {
                 <Text
                   style={
                     !otp
-                      ? styles.semiBold
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
                       : otp && otp.length < 6
-                      ? styles.semiBold
-                      : {...styles.semiBold, ...styles.textWhite}
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
+                      : {...styles.text1, ...styles.textWhite}
                   }>
                   Confirm
                 </Text>
@@ -280,10 +283,10 @@ function Register(props) {
                 <Text
                   style={
                     !pin
-                      ? styles.semiBold
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
                       : pin && pin.length < 6
-                      ? styles.semiBold
-                      : {...styles.semiBold, ...styles.textWhite}
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
+                      : {...styles.text1, ...styles.textWhite}
                   }>
                   Confirm
                 </Text>
@@ -298,7 +301,7 @@ function Register(props) {
               {isLoading ? (
                 <ActivityIndicator size="small" color="#fff" />
               ) : (
-                <Text style={{...styles.semiBold, ...styles.textWhite}}>
+                <Text style={{...styles.text1, ...styles.textWhite}}>
                   Login Now
                 </Text>
               )}
@@ -332,12 +335,12 @@ function Register(props) {
                 <Text
                   style={
                     !username || !email || !password
-                      ? styles.semiBold
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
                       : (username && username.length < 6) ||
                         (password && password.length < 8) ||
                         (email && !emailRules.test(email))
-                      ? styles.semiBold
-                      : {...styles.semiBold, ...styles.textWhite}
+                      ? {...styles.text2, textAlign: 'center', color: '#A9A9A9'}
+                      : {...styles.text1, ...styles.textWhite}
                   }>
                   Sign Up
                 </Text>

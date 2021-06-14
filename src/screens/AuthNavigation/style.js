@@ -1,9 +1,9 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
-  authHeader: {paddingTop: 40, paddingBottom: 40},
+  authHeader: { paddingTop: 40, paddingBottom: 40 },
   textHeader: {
     fontFamily: 'NunitoSans-Bold',
-    fontSize: 36,
+    fontSize: 24,
     textAlign: 'center',
     color: '#6379F4',
     paddingTop: 20,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   eyeIcon: {
     paddingTop: 0,
     marginTop: 0,
-    color: '#5c5c5c',
+    color: '#A9A9A9',
     justifyContent: 'flex-start',
   },
   footer: {
@@ -59,10 +59,11 @@ const styles = StyleSheet.create({
   button2: {
     width: '100%',
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: '40%',
     height: 45,
     marginBottom: 10,
     borderRadius: 10,
+    marginLeft: 10,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#e6e6e6',
@@ -85,6 +86,22 @@ const styles = StyleSheet.create({
   semiBold: {
     fontFamily: 'Kanit-SemiBold',
     color: '#000',
+  },
+  text1: {
+    fontFamily: 'NunitoSans-Bold',
+    fontSize: 18,
+    color: "#514F5B",
+  },
+  text2: {
+    fontFamily: 'NunitoSans-Bold',
+    fontSize: 16,
+    color: '#4D4B57'
+  },
+  text3: {
+    fontFamily: 'NunitoSans-Regular',
+    fontSize: 14,
+    marginTop: 10,
+    color: '#7A7886'
   },
   fontHeaderSmall: {
     fontSize: 26,
