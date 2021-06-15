@@ -26,7 +26,7 @@ import SpotifyLogo from '../../assets/img/logo-spotify.png';
 import axios from 'axios';
 import moment from 'moment';
 import {shallowEqual, useSelector} from 'react-redux';
-import Money from '../../assets/img/money.png';
+import Money from '../../assets/img/topup.png';
 
 const renderText = (typeId, sender, receiver, receiver_name, userId, notes) => {
   if (typeId === 3) return `${notes}`;
@@ -127,9 +127,6 @@ function TransactionHistory({navigation}) {
       </CardItem>
       <Content>
         <View style={styles.containerHistory}>
-          {/* <View style={styles.cardHistory}>
-            <Text style={styles.text3}>This Week</Text>
-          </View> */}
           {transactions.length === 0 && (
             <ActivityIndicator size={40} color="#6379F4" />
           )}
@@ -217,11 +214,17 @@ function TransactionHistory({navigation}) {
               />
             </View>
           </TouchableWithoutFeedback>
-          <View
-            elevation={5}
-            style={{borderRadius: 12, backgroundColor: '#FFFFFF', width: 200}}>
-            <Text style={styles.blueText1}>Filter By Date</Text>
-          </View>
+          <TouchableWithoutFeedback onPress={() => {}}>
+            <View
+              elevation={5}
+              style={{
+                borderRadius: 12,
+                backgroundColor: '#FFFFFF',
+                width: 200,
+              }}>
+              <Text style={styles.blueText1}>Filter By Date</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </Content>
     </Container>
