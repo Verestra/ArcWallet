@@ -1,34 +1,59 @@
 # ArcWallet
----
+
 ## Contents
 ---
 - [Description](https://github.com/Verestra/ArcWallet#Description)
+- [Installation](https://github.com/Verestra/ArcWallet#Installation)
 - [Features](https://github.com/Verestra/ArcWallet##Features)
 - [Requirements for Development](https://github.com/Verestra/ArcWallet##Requirements-for-Development)
 - [Link Deployment](https://github.com/Verestra/ArcWallet#Link-Deployment)
 - [Screenshot](https://github.com/Verestra/ArcWallet#Screenshot)
-## Description
----
+
+# Description
 ArcWallet is a Mobile App E Wallet application for Managing User Money.
+
+## Installation
+```bash
+Open your terminal or command prompt
+```
+
+```bash
+Clone the project git clone https://github.com/Verestra/ArcWallet.git
+```
+
+Move to the ArcWallet directory
+```bash
+cd ArcWallet
+```
+
+Install required dependencies
+```bash
+yarn install
+
+or
+
+npm install
+```
+
 ## Features
 ---
-- Lorem ipsum dolor sit amet,
-- Lorem ipsum dolor sit amet,
-- Lorem ipsum dolor sit amet,
-- and many more...
-## Requirments for Development
----
-- React Native
+- Authentication
+- Top Up Virtual Account
+- Transfer to another users
+- Receive money
+- Real Time Balance & Notifications
+- Transaction History
+
 ## Link Application
----
-Lorem ipsum dolor sit amet,
+- Google Drive https://drive.google.com/drive/folders/1_PojWyqm7yb5VYWABOaNSDHJKhuyHVP4
 ## Screenshot
+---------------
+## Screen Login
 ---
-Lorem ipsum dolor sit amet,
-## Screen 1
+## Screen Register
 ---
-## Screen 2
+## Screen Home
 ---
-## Screen 3
+## Screen Profile
 ---
 
