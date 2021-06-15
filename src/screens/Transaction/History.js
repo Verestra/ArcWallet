@@ -166,7 +166,9 @@ function TransactionHistory({navigation}) {
             (isLoading ? (
               <ActivityIndicator size={40} color="#6379F4" />
             ) : (
-              <Text style={{textAlign: 'center'}}>No Transaction History</Text>
+              <Text style={{textAlign: 'center', marginTop: 40}}>
+                No Transaction History
+              </Text>
             ))}
           {transactions.map((transaction, i) => (
             <List key={i} style={{marginLeft: -15, marginBottom: 20}}>
