@@ -1,87 +1,107 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StatusBar,Animated, StyleSheet, View, Image, Text} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import AuthNavigators from './src/navigators/AuthNavigators';
+import HomeNavigators from './src/navigators/HomeNavigators';
+import {connect} from 'react-redux';
+import NotifService from './src/services/notifications/NotifService';
+import {io} from 'socket.io-client';
+import {API_URL} from '@env';
+import {setBalance} from './src/redux/actions/balance';
 
-import Test from './src/screens/Test.js'
+function App(props) {
+  const {isLogin} = props;
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const {Navigator, Screen} = createStackNavigator();
 
-import Login from './src/screens/Login'
-import Home from './src/screens/Home'
+  useEffect(() => {
+    if (isLogin) {
+      const token = props.auth.results.token;
+      const userId = props.auth.results.id;
 
-function App () {
-    const fadeAnim = useRef(new Animated.Value(0)).current;
-    const {Navigator, Screen} = createStackNavigator();
-    const [splashScreenVisible, setSplashScreenVisible] = useState(true);
-    hideSplashScreen=()=>{  
-        setSplashScreenVisible(false);  
-      }
-      const fadeIn = () => {
-        // Will change fadeAnim value to 1 in 5 seconds
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 2500,
-          useNativeDriver: true
-        }).start();
-      };
-        useEffect(() => {
-            fadeIn()
-            setTimeout(function(){  
-                hideSplashScreen();  
-              }, 5000); 
-          });
-    let splashScreen = (  
-        <View style={styles.splashScreenRootView}>
-            <StatusBar
-            animated={true}
-            hidden={true} />  
-            <View style={styles.splashScreenChildView}>
-                <Animated.View style={{
-                    // Bind opacity to animated value
-                    opacity: fadeAnim }}>
-                <Text style={styles.textSplash}>Welcome To</Text> 
-                <Image source={require('./src/assets/img/arc_logo.png')} />
-            </Animated.View> 
-            </View>      
-        </View> )  
-    return (
-        <NavigationContainer style={styles.navigationContainer}>
-                  <Navigator headerMode={'none'}>
-                    {/* Testing Screen For Navigation Only */}
-                    <Screen name="navigation-testing" component={Test} />
-                    {/* Home Screen */}
-                    <Screen name="Home" component={Home} />
-                    {/* Auth Screen */}
-                    <Screen  name="Login" component={Login} />
-                  </Navigator>
-                  {(splashScreenVisible === true) ? splashScreen : null  }
-        </NavigationContainer>  
-    )
+      const notif = new NotifService();
+
+      const socket = io(API_URL, {
+        // timeout: 5000,
+        autoConnect: false,
+        reconnectionDelay: 10000,
+        query: {
+          token: `Bearer ${token}`,
+        },
+      });
+      socket.connect();
+
+      socket.on('connect', () => {
+        socket.emit('join', `notification:${userId}`);
+      });
+
+      socket.on('notification', notification => {
+        notif.localNotif(
+          notification.title || 'New Notification!',
+          notification.content,
+        );
+      });
+
+      socket.on('new-balance', balance => {
+        props.onSetBalance(balance);
+      });
+
+      socket.on('connect_error', err => {
+        console.log(err.message); // prints the message associated with the error
+      });
+      return () => socket.disconnect();
+    }
+  }, [isLogin]);
+
+  return (
+    <NavigationContainer style={styles.navigationContainer}>
+      <Navigator headerMode={'none'}>
+        {/* Auth Screen */}
+        {!isLogin ? (
+          <>
+            <Screen
+              name="Auth"
+              children={() => (
+                <AuthNavigators
+                  setIsLoggedIn={choice => setIsLoggedIn(choice)}
+                />
+              )}
+            />
+          </>
+        ) : (
+          <>
+            <Screen
+              name="Home"
+              children={() => (
+                <HomeNavigators
+                  setIsLoggedIn={choice => setIsLoggedIn(choice)}
+                />
+              )}
+            />
+          </>
+        )}
+      </Navigator>
+    </NavigationContainer>
+  );
 }
 
-const styles = StyleSheet.create( {   
-        navigationContainer: {
-          backgroundColor: '#F9F9F9',
-        },
-        splashScreenRootView: {  
-            justifyContent: 'center',  
-            flex:1,   
-            position: 'absolute',  
-            width: '100%',  
-            height: '100%',
-          },  
-       
-        splashScreenChildView: {  
-            justifyContent: 'center',  
-            alignItems: 'center',  
-            backgroundColor: '#FFFFFF',  
-            flex:1,  
-        },
-        textSplash : {
-            fontFamily: 'NunitoSans-ExtraLightItalic',
-            textAlign: 'center',
-            fontSize: 20,
-            color: "#6379F4"
-        }
-    });
+const styles = StyleSheet.create({
+  navigationContainer: {
+    backgroundColor: '#E5E5E5',
+  },
+});
+const mapStateToProps = state => {
+  return {
+    isLogin: state.auth.isLogin,
+    auth: state.auth,
+    balance: state.balance,
+  };
+};
 
-export default App
+const mapDispatchToProps = dispatch => {
+  return {
+    onSetBalance: value => dispatch(setBalance(value)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
