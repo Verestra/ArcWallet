@@ -3,6 +3,7 @@ import {View, ToastAndroid, TextInput} from 'react-native';
 import styles from './style';
 
 function OtpInput(props) {
+  const {secureIn} = props;
   const [input1, setInput1] = useState('');
   const [input2, setInput2] = useState('');
   const [input3, setInput3] = useState('');
@@ -48,119 +49,245 @@ function OtpInput(props) {
 
   return (
     <View style={styles.otpContainer}>
-      <TextInput
-        onFocus={() => setInput1('')}
-        value={input1}
-        returnKeyType="next"
-        clearTextOnFocus={true}
-        // keyboardType="phone-pad"
-        ref={inputRef1}
-        style={
-          input1.length > 0
-            ? {...styles.otp, ...styles.borderPrimary}
-            : styles.otp
-        }
-        underlineColor="black"
-        maxLength={1}
-        onChangeText={text => {
-          setInput1(text);
-          nextInput(text, inputRef2);
-        }}
-      />
-      <TextInput
-        onFocus={() => setInput2('')}
-        value={input2}
-        returnKeyType="next"
-        clearTextOnFocus={true}
-        // keyboardType="phone-pad"
-        ref={inputRef2}
-        style={
-          input2.length > 0
-            ? {...styles.otp, ...styles.borderPrimary}
-            : styles.otp
-        }
-        underlineColor="black"
-        maxLength={1}
-        onChangeText={text => {
-          setInput2(text);
-          nextInput(text, inputRef3);
-        }}
-      />
-      <TextInput
-        onFocus={() => setInput3('')}
-        value={input3}
-        returnKeyType="next"
-        clearTextOnFocus={true}
-        // keyboardType="phone-pad"
-        ref={inputRef3}
-        style={
-          input3.length > 0
-            ? {...styles.otp, ...styles.borderPrimary}
-            : styles.otp
-        }
-        underlineColor="black"
-        maxLength={1}
-        onChangeText={text => {
-          setInput3(text);
-          nextInput(text, inputRef4);
-        }}
-      />
-      <TextInput
-        onFocus={() => setInput4('')}
-        value={input4}
-        returnKeyType="next"
-        clearTextOnFocus={true}
-        // keyboardType="phone-pad"
-        ref={inputRef4}
-        style={
-          input4.length > 0
-            ? {...styles.otp, ...styles.borderPrimary}
-            : styles.otp
-        }
-        underlineColor="black"
-        maxLength={1}
-        onChangeText={text => {
-          setInput4(text);
-          nextInput(text, inputRef5);
-        }}
-      />
-      <TextInput
-        onFocus={() => setInput5('')}
-        value={input5}
-        returnKeyType="next"
-        clearTextOnFocus={true}
-        // keyboardType="phone-pad"
-        ref={inputRef5}
-        style={
-          input5.length > 0
-            ? {...styles.otp, ...styles.borderPrimary}
-            : styles.otp
-        }
-        underlineColor="black"
-        maxLength={1}
-        onChangeText={text => {
-          setInput5(text);
-          nextInput(text, inputRef6);
-        }}
-      />
-      <TextInput
-        onFocus={() => setInput6('')}
-        value={input6}
-        returnKeyType="done"
-        clearTextOnFocus={true}
-        // keyboardType="phone-pad"
-        ref={inputRef6}
-        style={
-          input6.length > 0
-            ? {...styles.otp, ...styles.borderPrimary}
-            : styles.otp
-        }
-        underlineColor="black"
-        maxLength={1}
-        onChangeText={text => {
-          setInput6(text);
-        }}
-      />
+      {!secureIn ? (
+        <>
+          <TextInput
+            onFocus={() => setInput1('')}
+            value={input1}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            // keyboardType="phone-pad"
+            ref={inputRef1}
+            style={
+              input1.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput1(text);
+              nextInput(text, inputRef2);
+            }}
+          />
+          <TextInput
+            onFocus={() => setInput2('')}
+            value={input2}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            // keyboardType="phone-pad"
+            ref={inputRef2}
+            style={
+              input2.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput2(text);
+              nextInput(text, inputRef3);
+            }}
+          />
+          <TextInput
+            onFocus={() => setInput3('')}
+            value={input3}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            // keyboardType="phone-pad"
+            ref={inputRef3}
+            style={
+              input3.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput3(text);
+              nextInput(text, inputRef4);
+            }}
+          />
+          <TextInput
+            onFocus={() => setInput4('')}
+            value={input4}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            // keyboardType="phone-pad"
+            ref={inputRef4}
+            style={
+              input4.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput4(text);
+              nextInput(text, inputRef5);
+            }}
+          />
+          <TextInput
+            onFocus={() => setInput5('')}
+            value={input5}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            // keyboardType="phone-pad"
+            ref={inputRef5}
+            style={
+              input5.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput5(text);
+              nextInput(text, inputRef6);
+            }}
+          />
+          <TextInput
+            onFocus={() => setInput6('')}
+            value={input6}
+            returnKeyType="done"
+            clearTextOnFocus={true}
+            // keyboardType="phone-pad"
+            ref={inputRef6}
+            style={
+              input6.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput6(text);
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <TextInput
+            onFocus={() => setInput1('')}
+            value={input1}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            keyboardType="numeric"
+            ref={inputRef1}
+            secureTextEntry={true}
+            style={
+              input1.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput1(text);
+              nextInput(text, inputRef2);
+            }}
+          />
+          <TextInput
+            secureTextEntry={true}
+            onFocus={() => setInput2('')}
+            value={input2}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            keyboardType="numeric"
+            ref={inputRef2}
+            style={
+              input2.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="numeric"
+            maxLength={1}
+            onChangeText={text => {
+              setInput2(text);
+              nextInput(text, inputRef3);
+            }}
+          />
+          <TextInput
+            secureTextEntry={true}
+            onFocus={() => setInput3('')}
+            value={input3}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            keyboardType="numeric"
+            ref={inputRef3}
+            style={
+              input3.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput3(text);
+              nextInput(text, inputRef4);
+            }}
+          />
+          <TextInput
+            secureTextEntry={true}
+            onFocus={() => setInput4('')}
+            value={input4}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            keyboardType="numeric"
+            ref={inputRef4}
+            style={
+              input4.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput4(text);
+              nextInput(text, inputRef5);
+            }}
+          />
+          <TextInput
+            secureTextEntry={true}
+            onFocus={() => setInput5('')}
+            value={input5}
+            returnKeyType="next"
+            clearTextOnFocus={true}
+            keyboardType="numeric"
+            ref={inputRef5}
+            style={
+              input5.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput5(text);
+              nextInput(text, inputRef6);
+            }}
+          />
+          <TextInput
+            secureTextEntry={true}
+            onFocus={() => setInput6('')}
+            value={input6}
+            returnKeyType="done"
+            clearTextOnFocus={true}
+            keyboardType="numeric"
+            ref={inputRef6}
+            style={
+              input6.length > 0
+                ? {...styles.otp, ...styles.borderPrimary}
+                : styles.otp
+            }
+            underlineColor="black"
+            maxLength={1}
+            onChangeText={text => {
+              setInput6(text);
+            }}
+          />
+        </>
+      )}
     </View>
   );
 }

@@ -211,44 +211,74 @@ function TransactionDetail(props) {
             <Text onPress={() => navigation.navigate('TransactionHistory')} style={styles.blueText}>See all</Text>
           </View>
           {history?.length === 0 && (
-            <Text style={{...styles.text3, textAlign:'center'}}>No Transaction History</Text>
+            <Text style={{ ...styles.text3, textAlign: 'center' }}>No Transaction History</Text>
           )}
           {history.map((item, i) => (
             <List key={i} style={{ marginLeft: -15, marginBottom: 20 }}>
-              <ListItem elevation={3} style={{ backgroundColor: '#FFFFFF', borderRadius: 10, padding: 10 }} thumbnail>
+              <ListItem
+                elevation={3}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 10,
+                  padding: 10,
+                }}
+                thumbnail>
                 <Left>
                   {item.type_id === 1 ? (
-                    item.receiver_avatar !== null ? (
-                      <Thumbnail source={{
-                        uri:
-                          `${API_URL}/images/${item.receiver_avatar}`,
-                      }} />
-                    ) : (
-                      <Thumbnail source={require('../../assets/img/blank-profile.png')} />
-                    )
+                    item.receiver == props.idUser ? (
+                      <Thumbnail
+                        source={{
+                          uri: `${API_URL}/images/${item.sender_avatar}`,
+                        }}
+                      />
+                    ) :
+                      item.receiver_avatar !== null ? (
+                        <Thumbnail
+                          source={{
+                            uri: `${API_URL}/images/${item.receiver_avatar}`,
+                          }}
+                        />
+                      ) : (
+                        <Thumbnail
+                          source={require('../../assets/img/blank-profile.png')}
+                        />
+                      )
                   ) : item.type_id === 2 ? (
                     <Thumbnail source={require('../../assets/img/topup.png')} />
                   ) : (
-                    <Thumbnail source={require('../../assets/img/subscription.png')} />
+                    <Thumbnail
+                      source={require('../../assets/img/subscription.png')}
+                    />
                   )}
                 </Left>
                 <Body style={{ borderBottomWidth: 0 }}>
-                  {item.receiver_name !== null ? (
-                    <Text style={styles.text2}>{item.receiver_name}</Text>
-                  ) : (
-                    <Text style={styles.text2}>{item.notes}</Text>
-                  )}
+                  {item.receiver_name !== null ?
+                    item.receiver == props.idUser ? (
+                      <Text style={styles.text2}>{item.sender_name}</Text>
+                    ) : (
+                      <Text style={styles.text2}>{item.receiver_name}</Text>
+                    ) :
+                    (
+                      <Text style={styles.text2}>{item.notes}</Text>
+                    )}
                   {item.type_id === 2 ? (
                     <Text style={styles.text2}></Text>
-                  ) : (
-                    <Text style={styles.text3}>{item.type}</Text>
-                  )}
+                  ) :
+                    item.receiver == props.idUser ? (
+                      <Text style={styles.text3}>{item.type} in</Text>
+                    ) : (
+                      <Text style={styles.text3}>{item.type} out</Text>
+                    )}
                 </Body>
                 <Right style={{ borderBottomWidth: 0 }}>
                   {item.type_id === (1 && 2) ? (
-                    <Text style={styles.plusText}>+Rp {item.amount}</Text>) :
-                    <Text style={styles.minusText}>-Rp {item.amount}</Text>
-                  }
+                    <Text style={styles.plusText}>+Rp {item.amount}</Text>
+                  ) :
+                    item.receiver == props.idUser ? (
+                      <Text style={styles.plusText}>+Rp {item.amount}</Text>
+                    ) : (
+                      <Text style={styles.minusText}>-Rp {item.amount}</Text>
+                    )}
                 </Right>
               </ListItem>
             </List>
@@ -259,7 +289,11 @@ function TransactionDetail(props) {
   );
 }
 const mapStateToProps = state => {
-  return { token: state.auth.results?.token };
+  return {
+    token: state.auth.results?.token,
+    balance: state.balance.balance,
+    idUser: state.auth.results?.id
+  };
 };
 const ConnectedTransactionDetail = connect(mapStateToProps)(TransactionDetail);
 export default ConnectedTransactionDetail

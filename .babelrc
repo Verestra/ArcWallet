@@ -5,8 +5,8 @@
         "path": ".env",
         "blacklist": null,
         "whitelist": ["API_URL"],
-        "safe": false,
-        "allowUndefined": true
+        "safe": true,
+        "allowUndefined": false
       }]
     ]
   }

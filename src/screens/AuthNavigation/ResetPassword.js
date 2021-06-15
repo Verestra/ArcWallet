@@ -81,7 +81,13 @@ function ResetPassword(props) {
             ? 'Password Changed!'
             : 'Reset Password'}
         </Text>
-        <Text style={{...styles.text3, textAlign: 'center', paddingHorizontal: 30, marginBottom: 35}}>
+        <Text
+          style={{
+            ...styles.text3,
+            textAlign: 'center',
+            paddingHorizontal: 30,
+            marginBottom: 35,
+          }}>
           {step === 0
             ? 'Enter your ArcWallet e-mail so we can send you a password reset link.'
             : step === 1
@@ -179,7 +185,7 @@ function ResetPassword(props) {
                 name="lock-outline"
                 style={
                   !confirmPassword
-                    ? {color: "#A9A9A9"}
+                    ? {color: '#A9A9A9'}
                     : password.length < 1 ||
                       (confirmPassword && confirmPassword !== password)
                     ? {color: 'red'}

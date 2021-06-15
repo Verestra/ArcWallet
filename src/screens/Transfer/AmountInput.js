@@ -98,7 +98,7 @@ function AmountInput(props) {
                     </List>
                     <View style={{ padding: 20 }}>
                         <Text style={{ ...styles.text2, textAlign: 'center' }}>
-                            Rp {profile.balance} Available
+                            Rp {props.balance} Available
                         </Text>
                         <Item style={{ marginTop: 20, borderColor: 'transparent' }}>
                             <TextInputMask
@@ -132,7 +132,7 @@ function AmountInput(props) {
                                 Amount or Notes cannot be empty
                             </Text>
                         ) : null}
-                        {amount > profile.balance ? (
+                        {amount > props.balance ? (
                             <Text style={{ textAlign: 'center', color: 'red', fontSize: 14 }}>
                                 Your Balance is not Sufficient
                             </Text>
@@ -148,7 +148,7 @@ function AmountInput(props) {
                             disabled={
                                 !amount || !notes
                                     ? true
-                                    : amount > profile.balance
+                                    : amount > props.balance
                                         ? true
                                         : amount < 10000
                                             ? true
@@ -162,7 +162,7 @@ function AmountInput(props) {
                                     pict: pict,
                                     phone: phone,
                                     amount: amount,
-                                    balance: profile.balance,
+                                    balance: props.balance,
                                     note: notes,
                                     date: today,
                                     time: time
@@ -171,7 +171,7 @@ function AmountInput(props) {
                             style={
                                 !amount || !notes
                                     ? styles.button2
-                                    : amount > profile.balance
+                                    : amount > props.balance
                                         ? styles.button2
                                         : amount < 10000
                                             ? styles.button2
@@ -187,7 +187,14 @@ function AmountInput(props) {
     )
 }
 const mapStateToProps = state => {
-    return { token: state.auth.results?.token };
+    return { 
+        token: state.auth.results?.token,
+        balance: state.balance.balance, };
 };
-const ConnectedAmountInput = connect(mapStateToProps)(AmountInput);;
+const mapStateToDispatch = dispatch => {
+    return {
+        onSetBalance: value => dispatch(setBalance(value)),
+    };
+};
+const ConnectedAmountInput = connect(mapStateToProps, mapStateToDispatch)(AmountInput);;
 export default ConnectedAmountInput

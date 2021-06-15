@@ -18,22 +18,25 @@ import {Right, Switch, Thumbnail, Icon, Button, Toast} from 'native-base';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import Axios from 'axios';
 import {getUser} from '../../redux/actions/user';
+import CustomModal from '../../components/Modal/CustomModal';
 function Profile(props) {
   const {user, navigation} = props;
   const [notifStatus, setNotifStatus] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [photo, setPhoto] = useState(null);
-
+  const [logoutModal, setLogoutModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isErr, setIsErr] = useState(false);
   useEffect(() => {
     if (success) {
-      setSuccess(false);
       props.getUser(`${API_URL}/v1/users`, props.auth.token);
     }
   }, [success]);
   const toggleSwitch = () => setNotifStatus(previousState => !previousState);
   const choosePhotoHandler = () => {
+    setIsErr(false);
+    setSuccess(false);
     launchImageLibrary({noData: true}, response => {
       // console.log(response);
       if (response) {
@@ -42,6 +45,8 @@ function Profile(props) {
     });
   };
   const launchCameraHandler = () => {
+    setIsErr(false);
+    setSuccess(false);
     launchCamera({noData: true}, response => {
       // console.log(response);
       if (response) {
@@ -71,6 +76,7 @@ function Profile(props) {
       })
       .catch(err => {
         console.log(err);
+        setIsErr(true);
         setIsLoading(false);
       });
     e.preventDefault();
@@ -78,7 +84,24 @@ function Profile(props) {
   // console.log(photo.assets[0].uri);
   return (
     <View style={{backgroundColor: 'white', width: '100%', height: '100%'}}>
-      {modalVisible ? (
+      {logoutModal && modalVisible ? (
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={choice => setModalVisible(choice)}
+          accHandler={() => {
+            props.postLogout(`${API_URL}/v1/auth/logout`, props.auth.token);
+            setModalVisible(false);
+            setLogoutModal(false);
+          }}
+          decHandler={() => {
+            setLogoutModal(false);
+            setModalVisible(false);
+          }}
+          phoneNumber={true}
+          logoutModal={true}
+          message={'are you sure want to logout ?'}
+        />
+      ) : modalVisible ? (
         <Modal
           animationType="slide"
           fullscreen={true}
@@ -102,8 +125,9 @@ function Profile(props) {
                   fontSize: 34,
                 }}
                 onPress={() => {
-                  setModalVisible(false);
+                  setSuccess(false);
                   setPhoto(null);
+                  setModalVisible(false);
                 }}
                 name="close"
               />
@@ -180,6 +204,23 @@ function Profile(props) {
                   </Text>
                 </Button>
               </View>
+              {success || isErr ? (
+                <View style={{height: 20, paddingLeft: 18}}>
+                  {success ? (
+                    <Text style={{color: 'green', fontSize: 14}}>
+                      <Icon
+                        name="checkmark-circle"
+                        style={{fontSize: 16, color: '#1EC15F'}}
+                      />
+                      upload success
+                    </Text>
+                  ) : isErr ? (
+                    <Text style={{color: 'red', fontSize: 14}}>
+                      upload failed
+                    </Text>
+                  ) : null}
+                </View>
+              ) : null}
 
               <Button
                 style={
@@ -311,7 +352,8 @@ function Profile(props) {
           <TouchableOpacity
             style={styles.card}
             onPress={() => {
-              props.postLogout(`${API_URL}/v1/auth/logout`, props.auth.token);
+              setModalVisible(true);
+              setLogoutModal(true);
               // persistor.purge();
             }}>
             <Text style={styles.textInCard}>Logout</Text>
@@ -340,6 +382,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profilePic: {
+    borderRadius: 20,
     marginBottom: 20,
   },
   textEdit: {

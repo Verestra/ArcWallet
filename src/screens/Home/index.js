@@ -26,6 +26,7 @@ function Home(props) {
   const [history, setHistory] = useState([]);
   const token = props.token;
   const navigation = useNavigation();
+  console.log(props.idUser);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -141,7 +142,13 @@ function Home(props) {
                 thumbnail>
                 <Left>
                   {item.type_id === 1 ? (
-                    item.receiver_avatar !== null ? (
+                    item.receiver == props.idUser ? (
+                      <Thumbnail
+                        source={{
+                          uri: `${API_URL}/images/${item.sender_avatar}`,
+                        }}
+                      />
+                    ) : item.receiver_avatar !== null ? (
                       <Thumbnail
                         source={{
                           uri: `${API_URL}/images/${item.receiver_avatar}`,
@@ -162,18 +169,26 @@ function Home(props) {
                 </Left>
                 <Body style={{borderBottomWidth: 0}}>
                   {item.receiver_name !== null ? (
-                    <Text style={styles.text2}>{item.receiver_name}</Text>
+                    item.receiver == props.idUser ? (
+                      <Text style={styles.text2}>{item.sender_name}</Text>
+                    ) : (
+                      <Text style={styles.text2}>{item.receiver_name}</Text>
+                    )
                   ) : (
                     <Text style={styles.text2}>{item.notes}</Text>
                   )}
                   {item.type_id === 2 ? (
                     <Text style={styles.text2}></Text>
+                  ) : item.receiver == props.idUser ? (
+                    <Text style={styles.text3}>{item.type} in</Text>
                   ) : (
-                    <Text style={styles.text3}>{item.type}</Text>
+                    <Text style={styles.text3}>{item.type} out</Text>
                   )}
                 </Body>
                 <Right style={{borderBottomWidth: 0}}>
                   {item.type_id === (1 && 2) ? (
+                    <Text style={styles.plusText}>+Rp {item.amount}</Text>
+                  ) : item.receiver == props.idUser ? (
                     <Text style={styles.plusText}>+Rp {item.amount}</Text>
                   ) : (
                     <Text style={styles.minusText}>-Rp {item.amount}</Text>
@@ -188,7 +203,11 @@ function Home(props) {
   );
 }
 const mapStateToProps = state => {
-  return {token: state.auth.results?.token, balance: state.balance.balance};
+  return {
+    token: state.auth.results?.token,
+    balance: state.balance.balance,
+    idUser: state.auth.results?.id,
+  };
 };
 const mapStateToDispatch = dispatch => {
   return {
