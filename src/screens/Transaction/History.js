@@ -3,6 +3,7 @@ import {API_URL} from '@env';
 import styles from './style';
 import {
   ActivityIndicator,
+  Modal,
   StatusBar,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -27,6 +28,7 @@ import axios from 'axios';
 import moment from 'moment';
 import {shallowEqual, useSelector} from 'react-redux';
 import Money from '../../assets/img/topup.png';
+import DatePicker from 'react-native-date-picker';
 
 const renderText = (typeId, sender, receiver, receiver_name, userId, notes) => {
   if (typeId === 3) return `${notes}`;
@@ -56,12 +58,9 @@ const renderIcon = (
 };
 
 function TransactionHistory({navigation}) {
-  const [endDate, setndDate] = useState(moment().format('yyyy-MM-DD'));
-
-  const [startDate, setStartDate] = useState(
-    moment().subtract(7, 'days').format('yyyy-MM-DD'),
-  );
-
+  const [endDate, setEndDate] = useState(moment());
+  const [startDate, setStartDate] = useState(moment().subtract(7, 'days'));
+  const [showDate, setShowDate] = useState(false);
   const [page, setPage] = useState('1');
   const [filter, setFilter] = useState('all');
   const [transactions, setTransactions] = useState([]);
@@ -74,11 +73,19 @@ function TransactionHistory({navigation}) {
   const userId = auth.results.id;
 
   useEffect(() => {
+    console.log('effect');
     setTransactions([]);
     setIsLoading(true);
+    console.log(
+      `${API_URL}/v1/transactions?page=${page}&limit=${100}&filter=${filter}&start=${moment(
+        startDate,
+      ).format('yyyy-MM-DD')}&end=${moment(endDate).format('yyyy-MM-DD')}`,
+    );
     axios
       .get(
-        `${API_URL}/v1/transactions?page=${page}&limit=${100}&filter=${filter}&start=${startDate}&end=${endDate}`,
+        `${API_URL}/v1/transactions?page=${page}&limit=${100}&filter=${filter}&start=${moment(
+          startDate,
+        ).format('yyyy-MM-DD')}&end=${moment(endDate).format('yyyy-MM-DD')}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -91,9 +98,10 @@ function TransactionHistory({navigation}) {
       })
       .catch(err => {
         console.log(err);
+        setTransactions([]);
         setIsLoading(false);
       });
-  }, [filter]);
+  }, [filter, showDate]);
 
   const setFilterIncome = () => {
     if (filter === 'income') {
@@ -126,6 +134,33 @@ function TransactionHistory({navigation}) {
         </Left>
       </CardItem>
       <Content>
+        <Modal
+          animationType="slide"
+          visible={showDate}
+          onRequestClose={() => {
+            setShowDate(!showDate);
+          }}>
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{textAlign: 'center'}}>Start Date</Text>
+            <DatePicker
+              date={startDate}
+              onDateChange={setStartDate}
+              mode="date"
+            />
+            <Text style={{textAlign: 'center'}}>End Date</Text>
+            <DatePicker
+              date={endDate}
+              onDateChange={setEndDate}
+              mode="date"
+              minimumDate={startDate}
+            />
+            <TouchableWithoutFeedback onPress={() => setShowDate(!showDate)}>
+              <Text style={{fontSize: 20, marginTop: 20}}>Confirm</Text>
+            </TouchableWithoutFeedback>
+          </View>
+        </Modal>
+
         <View style={styles.containerHistory}>
           {transactions.length === 0 && (
             <ActivityIndicator size={40} color="#6379F4" />
@@ -214,7 +249,10 @@ function TransactionHistory({navigation}) {
               />
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => {}}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setShowDate(true);
+            }}>
             <View
               elevation={5}
               style={{
