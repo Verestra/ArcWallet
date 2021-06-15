@@ -110,7 +110,7 @@ function TransactionHistory({navigation}) {
       setFilter('income');
     }
   };
-
+  console.log(endDate);
   const setFiltereExpense = () => {
     if (filter === 'expense') {
       setFilter('all');
@@ -162,9 +162,12 @@ function TransactionHistory({navigation}) {
         </Modal>
 
         <View style={styles.containerHistory}>
-          {transactions.length === 0 && (
-            <ActivityIndicator size={40} color="#6379F4" />
-          )}
+          {transactions.length === 0 &&
+            (isLoading ? (
+              <ActivityIndicator size={40} color="#6379F4" />
+            ) : (
+              <Text style={{textAlign: 'center'}}>No Transaction History</Text>
+            ))}
           {transactions.map((transaction, i) => (
             <List key={i} style={{marginLeft: -15, marginBottom: 20}}>
               <ListItem
