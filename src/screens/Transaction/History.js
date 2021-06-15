@@ -28,6 +28,7 @@ import axios from 'axios';
 import moment from 'moment';
 import {shallowEqual, useSelector} from 'react-redux';
 import Money from '../../assets/img/topup.png';
+import DefaultProfile from '../../assets/img/blank-profile.png';
 import DatePicker from 'react-native-date-picker';
 
 const renderText = (typeId, sender, receiver, receiver_name, userId, notes) => {
@@ -49,7 +50,9 @@ const renderIcon = (
     if (notes.toLowerCase() === 'spotify') return SpotifyLogo;
     return NetFlixLogo;
   }
-
+  if (receiver != userId && receiverAvatar == null) {
+    return DefaultProfile;
+  }
   return {
     uri: `${API_URL}/images/${
       receiver == userId ? senderAvatar : receiverAvatar
@@ -182,7 +185,6 @@ function TransactionHistory({navigation}) {
                 thumbnail>
                 <Left>
                   <Thumbnail
-                    square
                     source={
                       transaction.type_id === 2
                         ? Money
