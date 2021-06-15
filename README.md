@@ -9,9 +9,6 @@ ArcWallet is a Mobile App E Wallet application for Managing User Money.
 - [Requirements for Development](https://github.com/Verestra/ArcWallet##Requirements-for-Development)
 - [Link Deployment](https://github.com/Verestra/ArcWallet#Link-Deployment)
 - [Screenshot](https://github.com/Verestra/ArcWallet#Screenshot)
-## Description
----
-ArcWallet is a Mobile App E Wallet application for Managing User Money.
 
 ## Installation
 1. Open your terminal or command prompt
