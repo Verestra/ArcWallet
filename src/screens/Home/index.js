@@ -104,7 +104,9 @@ function Home(props) {
             </Text>
           </Button>
           <Button
-            onPress={() => navigation.navigate('TopUp')}
+            onPress ={() => navigation.navigate('TopUp', {
+              phone_number: profile.phone_number
+            })}
             style={styles.cardTransaction}>
             <Text style={styles.text1}>
               <Icon

@@ -10,8 +10,10 @@ import {
 } from 'react-native';
 import {Card, Icon, CardItem, Left, Right, Body} from 'native-base';
 
-const TopUp = ({navigation}) => {
-    const virtualAccNum = '2389 081393877946';
+const TopUp = ({navigation, route}) => {
+    // const virtualAccNum = '2389 081393877946';
+    const { phone_number } = route.params
+
     const step = {
       one: 'Go to the nearest ATM or you can use E-Banking.',
       two: 'Type your security number on theATM or E-Banking.',
@@ -59,7 +61,7 @@ const TopUp = ({navigation}) => {
                   fontWeight: 'bold',
                   fontSize: 18,
                 }}>
-                {virtualAccNum}
+                2389 {phone_number}
               </Text>
             </View>
           </View>

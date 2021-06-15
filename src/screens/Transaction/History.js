@@ -197,7 +197,7 @@ function TransactionHistory({navigation}) {
                     }
                   />
                 </Left>
-                <Body>
+                <Body style={{borderBottomWidth: 0}}>
                   <Text style={styles.text2}>
                     {renderText(
                       transaction.type_id,
@@ -211,7 +211,7 @@ function TransactionHistory({navigation}) {
                   <Text style={styles.text3}>{transaction.type}</Text>
                   <Text style={styles.text3}></Text>
                 </Body>
-                <Right>
+                <Right style={{borderBottomWidth: 0}}>
                   {transaction.receiver == userId ||
                   transaction.type_id === 2 ? (
                     <Text style={styles.plusText}>+Rp{transaction.amount}</Text>
