@@ -35,7 +35,10 @@ function Home(props) {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then(res => setProfile(res.data.data))
+        .then(res => {
+          setProfile(res.data.data);
+          props.onSetBalance(res.data.data.balance);
+        })
         .catch(err => console.log(err));
 
       axios
