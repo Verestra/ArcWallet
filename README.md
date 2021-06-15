@@ -48,12 +48,29 @@ npm install
 - Google Drive https://drive.google.com/drive/folders/1_PojWyqm7yb5VYWABOaNSDHJKhuyHVP4
 ## Screenshot
 ---------------
-## Screen Login
----
-## Screen Register
----
-## Screen Home
----
-## Screen Profile
----
+## Picture
+<p align="center">
+  Login <br>
+  <img src="https://github.com/Verestra/ArcWallet/blob/master/screenshot/login.png" title="Login" /> <br/>
+</p>
+<p align="center">
+ Sign Up <br/>
+  <img src="https://github.com/Verestra/ArcWallet/blob/master/screenshot/signup.png" title="Sign Up /> <br/>
+</p>
+<p align="center">
+ Home Screen <br/>
+  <img src="https://github.com/Verestra/ArcWallet/blob/master/screenshot/homescreen.png" title="Home Screen /> <br/>
+</p>
+<p align="center">
+ Profile Screen <br/>
+  <img src="https://github.com/Verestra/ArcWallet/blob/master/screenshot/profile.png" title="Profile Screen /> <br/>
+</p>
+<p align="center">
+ Transfer Screen <br/>
+  <img src="https://github.com/Verestra/ArcWallet/blob/master/screenshot/transfer.png" title="Transfer Screen /> <br/>
+</p>
+<p align="center">
+ Transaction Detail Screen <br/>
+  <img src="https://github.com/Verestra/ArcWallet/blob/master/screenshot/transaction-detail.png" title="Transaction Detail /> <br/>
+</p>
 
